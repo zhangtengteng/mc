@@ -1,0 +1,209 @@
+package com.chehui.maiche.setup;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import android.content.Intent;
+import android.content.pm.PackageManager.NameNotFoundException;
+import android.net.Uri;
+import android.os.Bundle;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
+import android.view.Gravity;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.chehui.maiche.BaseActivity;
+import com.chehui.maiche.R;
+import com.chehui.maiche.pop.PoPShareWindowManager;
+import com.chehui.maiche.update.UpdateManager;
+import com.chehui.maiche.utils.ToastUtils;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.bean.SocializeEntity;
+import com.umeng.socialize.controller.UMServiceFactory;
+import com.umeng.socialize.controller.UMSocialService;
+import com.umeng.socialize.controller.listener.SocializeListeners.SnsPostListener;
+import com.umeng.socialize.media.UMImage;
+import com.umeng.socialize.weixin.controller.UMWXHandler;
+import com.umeng.socialize.weixin.media.CircleShareContent;
+import com.umeng.socialize.weixin.media.WeiXinShareContent;
+
+/**
+ * 关于界面
+ * 
+ * @author gqy
+ * 
+ */
+public class SetupAboutActivity extends BaseActivity implements OnClickListener {
+	// 版本升级
+	private LinearLayout rlUpgrade;
+	private TextView setup_about_share;
+	private UMSocialService mController;
+	private LinearLayout layout;
+	private String url = "http://test.m.chehui.com/download/";
+	private String content = "车惠卖车通，是车惠网旗下帮助4S店销售顾问实实在在提示业绩的卖车软件！根据本地精准的潜在购车线索，加盟销售顾问采取匿名报价的方式快速抢单报价获取客户。\n车惠卖车通的目标是让所有销售顾问的收入翻倍！";
+	Map<String, SHARE_MEDIA> mPlatformsMap = new HashMap<String, SHARE_MEDIA>();
+	private String url_main = "http://www.chehui.com/";
+	private TextView tvChehui;
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_about);
+		initTitleView(-1, 255, R.string.set_account_about, 255, -1, 0);
+		init();
+		initShare();
+	}
+
+	private void init() {
+
+		setup_about_share = (TextView) findViewById(R.id.setup_about_share);
+		setup_about_share.setText(Html.fromHtml("<u>分享给微信好友</u>"));
+		// 车惠网
+		tvChehui = (TextView) findViewById(R.id.tv_chehui);
+		tvChehui.setText(Html.fromHtml("<u>车惠网网址</u>"));
+		rlUpgrade = (LinearLayout) findViewById(R.id.rlUpgrade);
+		rlUpgrade.setOnClickListener(this);
+		setup_about_share = (TextView) findViewById(R.id.setup_about_share);
+		setup_about_share.setOnClickListener(this);
+		layout = (LinearLayout) findViewById(R.id.layout);
+		tvChehui.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent();
+				intent.setAction("android.intent.action.VIEW");
+				Uri content_url = Uri.parse(url_main);
+				intent.setData(content_url);
+				startActivity(intent);
+			}
+		});
+	}
+
+	private void initShare() {
+		String appId = "wxfbd9c8d3159bc175";
+		String appSecret = "59feb1141e06816e952ff5bc7098c42e";
+		// 添加微信平台
+		UMWXHandler wxHandler = new UMWXHandler(SetupAboutActivity.this, appId,
+				appSecret);
+		wxHandler.addToSocialSDK();
+		// 添加微信朋友圈
+		UMWXHandler wxCircleHandler = new UMWXHandler(SetupAboutActivity.this,
+				appId, appSecret);
+		wxCircleHandler.setToCircle(true);
+		wxCircleHandler.addToSocialSDK();
+
+		// 设置微信好友分享内容
+		WeiXinShareContent weixinContent = new WeiXinShareContent();
+		// 设置分享文字
+		weixinContent.setShareContent(content);
+		// 设置title
+		weixinContent.setTitle("车惠卖车通");
+		// 设置分享内容跳转URL
+		weixinContent.setTargetUrl(url);
+		weixinContent.setShareImage(new UMImage(SetupAboutActivity.this,
+				R.drawable.icon));
+
+		// 设置微信朋友圈分享内容
+		CircleShareContent circleMedia = new CircleShareContent();
+		circleMedia.setShareContent(content);
+		// 设置朋友圈title
+		circleMedia.setTitle("车惠卖车通");
+		// 设置分享内容跳转URL
+		circleMedia.setTargetUrl(url);
+		circleMedia.setShareImage(new UMImage(SetupAboutActivity.this,
+				R.drawable.icon));
+		// 首先在您的Activity中添加如下成员变量
+		mController = UMServiceFactory.getUMSocialService("com.umeng.share");
+		mController.setShareMedia(weixinContent);
+		mController.setShareMedia(circleMedia);
+		mController.getConfig().removePlatform(SHARE_MEDIA.SINA,
+				SHARE_MEDIA.TENCENT);
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.rlUpgrade:
+			try {
+				new UpdateManager(this).isupdate();
+			} catch (NameNotFoundException e) {
+				e.printStackTrace();
+			}
+			break;
+		case R.id.setup_about_share:
+			showCustomUI();
+			break;
+//		case R.id.tv_chehui:
+//			ToastUtils.showShortToast(SetupAboutActivity.this, "==========");
+//			// Intent it = new Intent(Intent.ACTION_VIEW, uri);
+//			// startActivity(it);
+//			Intent intent = new Intent();
+//			intent.setAction("android.intent.action.VIEW");
+//			Uri content_url = Uri.parse(url_main);
+//			intent.setData(content_url);
+//			startActivity(intent);
+//			break;
+		default:
+			break;
+		}
+	}
+
+	/**
+	 * 分享监听器
+	 */
+	SnsPostListener mShareListener = new SnsPostListener() {
+
+		@Override
+		public void onStart() {
+
+		}
+
+		@Override
+		public void onComplete(SHARE_MEDIA platform, int stCode,
+				SocializeEntity entity) {
+			if (stCode == 200) {
+				// Toast.makeText(SetupAboutActivity.this, "分享成功",
+				// Toast.LENGTH_SHORT).show();
+			} else {
+				Toast.makeText(SetupAboutActivity.this,
+						"分享失败 : error code : " + stCode, Toast.LENGTH_SHORT)
+						.show();
+			}
+		}
+	};
+
+	private void showCustomUI() {
+		@SuppressWarnings("deprecation")
+		int width = getWindowManager().getDefaultDisplay().getWidth();
+		@SuppressWarnings({ "deprecation" })
+		int height = getWindowManager().getDefaultDisplay().getHeight();
+		PoPShareWindowManager.getInstance().init(getApplicationContext(),
+				width, 200, R.layout.pop_share_wechat);
+		PoPShareWindowManager.getInstance().showPopAllLocation(layout,
+				Gravity.CENTER | Gravity.BOTTOM, 0, 0);
+		PoPShareWindowManager.getInstance().OnClickWechat(
+				new OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						// 调用直接分享
+						mController.directShare(SetupAboutActivity.this,
+								SHARE_MEDIA.WEIXIN, mShareListener);
+					}
+				});
+		PoPShareWindowManager.getInstance().OnClickWechatCircle(
+				new OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						// 调用直接分享
+						mController.directShare(SetupAboutActivity.this,
+								SHARE_MEDIA.WEIXIN_CIRCLE, mShareListener);
+					}
+				});
+	}
+}

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <!-- top title -->
+    <color name="top_title">#1497c0</color>
+    
+    <!-- login -->
+    <color name="login_btn_background">#ff9a00</color>
+    
+    <!-- order detail -->
+    <color name="view_line">#f2f2f2</color>
+    
+    <!-- tab -->
+    <color name="tab">#646464</color>
+    <!-- main -->
+    <color name="main_background_gray">#f4f4f4</color>
+    <color name="pop_btn">#F0F0F0</color>
+    
+    <!-- 询价订单 -->
+    <color name="main_order_background">#f7f7f7</color>
+    <!-- 我的询价 -->
+    <color name="time_bg">#2bc0df</color>
+    
+    
+    <!-- 消息平台 -->
+    <color name="corner_strock">#a8a8a8</color>
+    <color name="light_green">#2bc0e0</color>
+    <color name="tbg">#b0000000</color>
+	
+    	
+    
+    <color name="login_TextView_background">#f4f6f4</color>
+    <color name="bubble_dark_background">#B2191919</color>
+	<drawable name="translucent_background">#30000000</drawable>
+	<drawable name="transparent_background">#00000000</drawable>
+	<color name="transparent">#00000000</color>
+	<color name="blue">#2d8ad9</color>
+	<color name="login_bule">#1497c0</color>
+	<color name="foot">#1494be</color>
+	<color name="silver_blue">#003366</color>
+	<color name="white">#ffffff</color>
+	<color name="black">#000000</color>
+	<color name="translucent">#4d4d4d</color>
+	<color name="black_modify">#6b6b6b</color>
+	<color name="blue_modify">#518c8b</color>
+	<color name="darkgray">#938192</color>
+	<color name="Silver">#CCCCCC</color>
+	<color name="gray_back">#1000</color>
+	<color name="Silver11">#999999</color>
+	<color name="lightgreen">#7cd12e</color>
+	<color name="shen_black">#000033</color>
+	<color name="zise">#660066</color>
+	<color name="yellow">#FF9900</color>
+	<color name="red">#FF0033</color>
+	<color name="detail_blue">#003399</color>
+	<color name="detail_red">#CE0A0A</color>
+	<color name="detail_gray">#878787</color>
+	<color name="detail_modify_gray">#cccccd</color>
+	<color name="orange">#FF8000</color>
+	<color name="dark_blue">#0E3D9E</color>
+	<color name="green">#5a9204</color>
+	<color name="dark_green">#8FBC8F</color>
+	<color name="little_gray">#E8E5E5</color>
+	<color name="low_white">#FBFBFB</color>
+	<color name="dialog_bg_color">#E8E8E8</color>
+	<color name="light_orange">#fd7d13</color>
+	<color name="light_gray">#555555</color>
+	<color name="common_btn_text">#708C3B</color>
+	<color name="common_set_main_text">#303438</color>
+	<color name="common_set_tip_text">#AFAFAF</color>
+	<color name="font_color">#81cc0f</color>
+</resources>

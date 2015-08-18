@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/layout"
+    android:background="@color/main_background_gray"
+    android:orientation="vertical" >
+    <include  layout="@layout/top_title"/>
+     <View android:layout_width="match_parent"
+         android:layout_height="0.5dp"
+         android:layout_marginTop="30dp"
+         android:background="@color/little_gray"/>
+    <RelativeLayout 
+          android:layout_width="match_parent"
+          android:layout_height="50dp"
+          android:background="@color/white"
+          >
+          
+          <TextView
+              android:id="@+id/upload_invoice"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_alignParentLeft="true"
+              android:layout_centerVertical="true"
+              android:layout_marginLeft="10dp"
+              android:gravity="center_vertical"
+              android:text="@string/upload_invoice"
+              android:textColor="@color/black"
+              android:textSize="16sp" />
+
+            <RelativeLayout
+                android:layout_width="55dp"
+                android:layout_height="35dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:gravity="center_vertical" >
+                <Button 
+                    android:id="@+id/upload_invoice_select"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textSize="10sp"
+                    android:background="#2000"
+                    android:visibility="gone"
+                    android:text="@string/select"/>
+                
+                <ImageView 
+                    android:id="@+id/upload_invoice_pic"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+            </RelativeLayout>
+      </RelativeLayout>
+      <View android:layout_width="match_parent"
+         android:layout_height="0.5dp"
+         android:background="@color/little_gray"/>
+    <Button
+        android:id="@+id/upload_commit_invoice"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/corners_login_btn_bg"
+        android:text="@string/upload"
+        android:textColor="@color/white"
+        android:textSize="20sp" />
+   </LinearLayout>
+

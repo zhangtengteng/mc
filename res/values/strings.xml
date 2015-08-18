@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="list_no_item">没有你要查找的数据</string>
+
+    <!-- tab -->
+    <string name="tab_one">抢单报价</string>
+    <string name="tab_two">我的报价</string>
+    <string name="tab_three">我的奖金</string>
+    <string name="tab_four">设置</string>
+    <!-- add bank -->
+    <string name="add_bank_hint1">请输入支付密码</string>
+
+    <!-- reg -->
+
+    <string name="ptr_pull_to_refresh">下拉刷新</string>
+    <string name="ptr_release_to_refresh">松开刷新</string>
+    <string name="ptr_refreshing">正在刷新</string>
+    <string name="ptr_last_updated">Updated: %1$s</string>
+    <string name="reg_next">下一步</string>
+    <string name="reg_user_agreement">点击下一步,即表示同意</string>
+    <string name="reg_user_agreement_txt">《卖车通用户协议》</string>
+    <string name="reg_user_name">请输入手机号</string>
+    <string name="reg_user_pwd">请填写你的密码</string>
+    <string name="reg_user_code">请输入验证码</string>
+    <string name="reg_user_send_code">发送验证码</string>
+    <string name="reg2_name">请填写你的姓名</string>
+    <string name="reg2_phone">请填写你的手机号</string>
+    <string name="reg2_pwd1">请填写你的密码</string>
+    <string name="reg2_pwd2">请再次输入密码</string>
+    <string name="reg2_email">请填写你的邮箱号码</string>
+    <string name="reg2_location">请选择你所在地区</string>
+    <string name="reg_select_brand">请选择第一品牌车系</string>
+    <string name="reg2_select_one">请选择第一品牌车系</string>
+    <string name="reg2_select_two">请选择第二品牌车系</string>
+    <string name="reg2_select_tree">请选择第三品牌车系</string>
+    <string name="reg2_finish1">恭喜您注册成功</string>
+    <string name="reg2_finish2">暂不认证，先看看！>>></string>
+    <string name="reg_authentication">立即进行实名认证</string>
+
+    <!-- login -->
+    <string name="account_input_hint">用户名不能为空</string>
+    <string name="account_input_phone_error">手机号格式不正确</string>
+    <string name="pwd_input_hint">密码不能为空</string>
+    <string name="login_user">新用户注册</string>
+    <string name="pwd_remember">忘记密码?</string>
+    <string name="login_question">登录遇到问题</string>
+    <string name="login_question_phone">验证手机号为你注册时的账号</string>
+    <string name="sms">用短信验证码重置</string>
+    <string name="vertify_num">验证码：</string>
+    <string name="vertify_phone">手机号：</string>
+    <string name="vertifycode">验证码</string>
+    <string name="pwd_new">密码</string>
+    <string name="pwd_sure">确认密码</string>
+    <string name="pwd_new_hint">请输入新密码</string>
+    <string name="pwd_new_again">再次输入密码</string>
+    <string name="newpwd">重设密码</string>
+    <!-- 用户协议 -->
+    <string name="deal">用户协议 </string>
+    <string name="txt_deal">1、卖车通可随时自行全权决定更改协议内“条款”。如“条款”有任何变更，卖车通将在其App中刊载公告并通知您。如您不同意相关变更，必须停止使用卖车通App。您应该仔细阅读修订后的协议“条款”，并有权选择停止使用卖车通App；一旦您继续使用卖车通App，则表示您已接受经修订的“条款”，当您与卖车通发生争议时，应以最新的协议为准。\n
+        \n
+2、卖车通App仅供能够根据相关法律订立具有法律约束力的合约的个人或公司使用。因此，您的年龄必须在十八周岁或以上才可使用，如不符合本项条件，请勿使用此App。卖车通可随时自行全权决定暂时或永久终止任何人士或公司对此App的使用权。\n
+\n
+3、用户在卖车通App申请开通时需保证：根据卖车通提供的申请开通页面所提供关于您或贵公司的信息真实、准确、完整；维持并及时更新个人信息，使其保持真实、准确、完整和反映当前情况。倘若您提供任何不真实、不准确、不完整或不能反映当前情况的资料，或我公司有合理理由怀疑该等资料不真实、不准确、不完整或不能反映当前情况，我公司有权暂停或终止您的注册身份及资料，并拒绝您在目前或将来对卖车通App以任何形式使用。\n
+\n
+4、用户通过车惠卖车通向消费者报价，需保证所报价格的真实有效性，同时价格有效期必须在72小时以上。如发现以下情况，车惠有权利冻结账户、并扣除所有账户内的返利：① 批量刷报价；② 所报价格存在欺瞒或未说明的强制消费，并导致消费者无法完成购车。\n
+\n
+5、用户通过车惠卖车通向消费者所报价格长期没有优势，或长期(一般为3个月)没有成交的用户，车惠有权利冻结账户，但冻结前账户内的返利可正常结出。\n
+\n
+6、用户不得在卖车通App中发表涉及如下的内容：① 反对宪法所确定的基本原则，煽动、抗拒、破坏宪法和法律、行政法规实施的；② 煽动颠覆国家政权，推翻社会主义制度，煽动、分裂国家，破坏国家统一的；③ 损害国家荣誉和利益的；④ 煽动民族仇恨、民族歧视，破坏民族团结的；⑤ 任何包含对种族、性别、宗教、地域内容等歧视的；⑥ 捏造或者歪曲事实，散布谣言，扰乱社会秩序的；⑦ 宣扬封建迷信、邪教、淫秽、色情、赌博、暴力、凶杀、恐怖、教唆犯罪的；⑧ 公然侮辱他人或者捏造事实诽谤他人的，或者进行其他恶意攻击的；⑨ 损害国家机关信誉的；⑩ 其他违反宪法和法律行政法规的。如若发现违反此规定的行为，您需负全部责任，我公司有权采取相应措施（包括但不仅限删除）同时终止您对卖车通App的使用权。\n
+\n
+7、对于因本公司合理控制范围以外的原因，包括但不限于自然灾害、罢工、骚乱、物质短缺或定量配给、暴动、战争行为、政府行为、通讯或其他设施故障或严重伤亡事故等不可抗力因素，致使本公司对用户的承诺延迟或未能履约的，卖车通不承担任何责任。\n
+\n
+8、用户需遵守所有适用汽车销售行业的法律、法规、条例和规章。
+\n
+\n</string>
+
+    <!-- 我的报价 -->
+    <string name="xunjia_baojia">我的报价</string>
+    <string name="xunjia_chexi">请选择车系</string>
+    <string name="xunjia_dijia">请报出汽车底价</string>
+    <string name="xunjia_baoxian">请报出保险价格</string>
+    <string name="xunjia_shagnpai">请报出牌证价格</string>
+    <string name="xunjia_gouzhi">请报车辆购置税价格</string>
+    <string name="xunjia_yufu">预付价格：</string>
+    <string name="xunjia_fuzeng">请添加附赠商品：</string>
+    <string name="upload_invoice">发票</string>
+    <string name="upload_invoice_txt">上传发票</string>
+    <string name="upload_invoice_success">上传成功</string>
+    <string name="invoice_upload_success">已提交发票审核！</string>
+
+    <!-- main -->
+    <string name="main_order">抢单报价</string>
+    <string name="main_my_order">我的报价</string>
+    <string name="main_rebate">我的奖金</string>
+    <string name="main_rebate_order_number">订单号：</string>
+    <string name="main_rebate_get">已领取</string>
+    <string name="main_rebate_not_get">为领取</string>
+    <string name="app_name">车惠卖车通</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="login_user_hint">请输入手机号</string>
+    <string name="login_pwd_hint">请输入密码</string>
+    <string name="login">登录</string>
+    <string name="reg">新用户注册</string>
+    <string name="reg_success">注册成功</string>
+    <string name="main_set">设置</string>
+    <string name="tabhost_time">全部</string>
+    <string name="order_detail">订单详情</string>
+    <string name="myorder_detail">报价详情</string>
+    <string name="order_success">报价成功</string>
+
+    <!-- pull_to_refresh_listview -->
+
+
+    <!-- 自定义组件 -->
+    <string name="pull_to_refresh">下拉可以刷新</string>
+    <string name="release_to_refresh">松开可以刷新</string>
+    <string name="lastUpdateTime">最近更新：%s</string>
+    <string name="load_full">已加载全部</string>
+    <string name="no_data">暂无数据</string>
+    <string name="more">加载中</string>
+
+    <!-- 关于我们 -->
+    <string name="upgrade">新版本检测</string>
+    <!-- 询价详情 -->
+    <string name="order_detail_state">询价状态</string>
+    <string name="order_detail_number">询价编号</string>
+    <string name="order_detail_car_price">车辆价格</string>
+    <string name="order_detail_insurance_price">保险价格</string>
+    <string name="order_detail_price">订单价格</string>
+    <string name="order_detail_phone">电话号码</string>
+    <string name="order_detail_city">提车城市</string>
+    <string name="order_detail_introduction">商品简介</string>
+    <string name="order_detail_xunjia">立即报价</string>
+
+    <!-- 返利详情 -->
+    <string name="rabate_detail">返利详情</string>
+    <string name="rabate_detail_state">返利状态</string>
+    <string name="rabate_detail_money">返利金额</string>
+    <string name="rabate_detail_time">返利时间</string>
+    <string name="rabate_detail_tixian">立即提现</string>
+    <string name="rabate_withdraw_tips">注:每次提现不得低于￥2000</string>
+
+    <!-- 消除警告，可忽略 -->
+    <string name="d">图片描述</string>
+
+    <!-- 账号管理 -->
+    <string name="set_account_persion">个人信息</string>
+    <string name="set_account_money">奖金明细</string>
+    <string name="set_account_name">姓名</string>
+    <string name="set_account_about">关于平台</string>
+    <string name="set_account_phone">手机号</string>
+    <string name="set_account_pushmsg">消息推送</string>
+    <string name="set_account_email">邮箱号</string>
+    <string name="set_account_feedback">意见反馈</string>
+    <string name="set_account_city">所在地区</string>
+    <string name="set_account_bland">所选品牌</string>
+    <string name="set_account_add_bank_top">添加银行卡</string>
+    <string name="set_account_add_bank_top2">+银行卡</string>
+    <string name="set_account_writer_bank_top">添加成功</string>
+    <string name="set_account_authentication">实名认证</string>
+    <string name="set_account_uploadpic">上传证件及名片</string>
+    <string name="set_upload_success">已提交证件审核！</string>
+    <string name="set_upload_success_info">车惠工作人员将在12H内审核您的信息</string>
+
+    <!-- 钱包 -->
+    <string name="set_account_balance">钱包余额</string>
+    <string name="set_account_now_balance">提现</string>
+    <string name="rabate_withdraw_money">选择提现金额</string>
+    <string name="set_account_add_bank_card">添加银行卡</string>
+    <string name="set_account_select_bank_card">选择银行卡</string>
+    <string name="set_account_vertify_phone">验证手机号</string>
+    <string name="set_account_commit_finish">提交完成</string>
+    <string name="set_account_tixian_price">金额(元)</string>
+    <string name="set_account_hint_pwd">请输入验证密码</string>
+    <string name="set_account_card_bank">开户行</string>
+    <string name="hint_account_card_bank">请选择开户行</string>
+    <string name="set_account_card_holder">持卡人</string>
+    <string name="set_account_card_number">卡\u0020\u0020号</string>
+    <string name="hint_account_card_holder">请输入持卡人姓名</string>
+    <string name="hint_account_card_number">请输入卡号</string>
+    <string name="set_account_auth_code">获取验证码</string>
+    <string name="set_account_withdrawal_amount">提现金额</string>
+    <string name="set_account_memory_card">储蓄卡</string>
+    <string name="set_account_memory_card_type">卡类型</string>
+    <string name="set_account_memory_card_phone">手机号</string>
+    <string name="hint_account_memory_card_phone">请输入验证手机号</string>
+    <string name="set_account_wallet7_hint1">中国银行 尾号8888</string>
+    <string name="set_account_wallet7_hint2">￥1000</string>
+    <string name="set_account_add_bank_finish">恭喜你添加成功</string>
+    <string name="set_account_wallet_finish">提现申请已提交</string>
+    <string name="set_account_wallet_time">预计到账时间：</string>
+
+    <!-- 意见反馈 -->
+    <string name="feddback_hint">请输入您的宝贵意见：</string>
+    <string name="feddback_commit">提交</string>
+
+    <!-- 消息平台 -->
+    <string name="message_order_state">已支付</string>
+    <string name="message_order_time">刚刚 16:16</string>
+    <string name="message_order_title">[江宁区]优质龙膜贴膜</string>
+    <string name="message_order_sail">套餐特价</string>
+    <string name="message_order_money">金额：19:00元 ●数量：10件</string>
+    <string name="message_order_phone">13813813888</string>
+
+    <!-- 消息推送 -->
+    <string name="sound_on_of">声音开光</string>
+    <string name="message_on_off">消息开关</string>
+    <string name="message_top_title">消息推送</string>
+
+    <!-- 订单检验 -->
+    <string name="order_check_phone">请输入手机号码</string>
+    <string name="order_check_pwd">请输入验证码</string>
+    <string name="order_check">验证订单</string>
+
+    <!-- 设置 -->
+    <string name="set_account">账号管理</string>
+    <string name="set_send_message">消息推送</string>
+    <string name="set_feedback">意见反馈</string>
+    <string name="set_clear">清理缓存</string>
+    <string name="set_tips">卖车秘籍</string>
+    <string name="set_about">关于平台</string>
+    <string name="set_loginOut">退出当前账号</string>
+    <string name="identify_card">身份证</string>
+    <string name="business_card">名片</string>
+    <string name="select">请选择</string>
+    <string name="next">下一步</string>
+    <string name="upload">上传</string>
+    <string name="feedback_session">注：订单相关问题或紧急相关问题请拨打客服电话获得及时相关帮助</string>
+    <string name="call_us">24小时服务热线:</string>
+    <string name="feedback_success">上传成功</string>
+    <string name="feedback_phone">15850590710</string>
+    <string name="feed_success">恭喜意见提交成功！</string>
+    <string name="feed_title_success">提交成功</string>
+    <string name="feedback_commit_finish">完成</string>
+    <string name="version_session">车惠卖车通，是车惠网旗下帮助4S店销售顾问实实在在提示业绩的卖车软件！根据本地精准的潜在购车线索，加盟销售顾问采取匿名报价的方式快速抢单报价获取客户。\n车惠卖车通的目标是让所有销售顾问的收入翻倍！ </string>
+    <string name="version_session2">车惠卖车通的目标是让所有销售顾问的收入翻倍！</string>
+    <string name="version_url_txt">车惠网网址:</string>
+    <string name="version_url">www.chehui.com</string>
+    <string name="version_tell_friend">告诉朋友:</string>
+    <string name="version_share_wechat">将卖车通分享给微信好友</string>
+    <!-- 公共 -->
+
+    <string name="common_abnormal_server">服务器异常&#8230;</string>
+    <string name="common_request_more">查看更多&#8230;</string>
+    <string name="common_request_no_title"></string>
+    <string name="common_requesting"></string>
+    <string name="common_requesting_time_out">请求超时&#8230;</string>
+    <string name="common_querying"></string>
+    <string name="common_buffering">正在缓冲&#8230;</string>
+    <string name="common_loading">正在加载&#8230;</string>
+    <string name="common_logining"></string>
+    <string name="common_sending">正在发送&#8230;</string>
+    <string name="common_downloading">正在下载&#8230;</string>
+    <string name="common_uploading">正在上传&#8230;</string>
+    <string name="common_openning">正在开启&#8230;</string>
+    <string name="common_exitting">正在退出&#8230;</string>
+    <string name="common_clearing">正在清理&#8230;</string>
+    <string name="common_saving">正在保存&#8230;</string>
+    <string name="common_verifying">正在验证&#8230;</string>
+    <string name="common_save_success">保存成功</string>
+    <string name="common_confirm">确定</string>
+    <string name="common_cancel">取消</string>
+    <string name="common_btn_start">启动</string>
+    <string name="common_btn_save">保存</string>
+    <string name="common_btn_enter">进入</string>
+    <string name="common_btn_finish">马上提现</string>
+    <string name="common_btn_set">设置</string>
+    <string name="common_btn_goto_set">去设置</string>
+    <string name="common_btn_detail">详情</string>
+    <string name="common_btn_delete">删除</string>
+    <string name="common_text_title">标题</string>
+    <string name="common_text_title_empty">请输入标题</string>
+    <string name="common_text_content">正文</string>
+    <string name="common_text_content_empty">请输入正文</string>
+    <string name="common_text_publish">发布</string>
+    <string name="common_text_search">搜索</string>
+    <string name="common_text_order">开通</string>
+    <string name="common_text_send">发送</string>
+    <string name="msg_isnull">发送信息为空</string>
+    <string name="common_network_unavalible">请打开您的网络连接</string>
+    <string name="common_text_tips">提示</string>
+    <string name="dialog_message_exitapp">确认退出？</string>
+    <string name="dialog_choose_Other">其他</string>
+    <string name="dialog_choose_pic_takephoto">拍照</string>
+    <string name="dialog_choose_pic_formlocal">从本地选择</string>
+    <string name="dialog_load_draff">是否继续编辑草稿？</string>
+    <string name="dialog_save_draff">是否保存为草稿？</string>
+    <string name="dialog_login_by_other">您的帐号已在其他地方登录</string>
+    <string name="uploadpic_finish">上传成功</string>
+    <!-- 错误码 -->
+
+    <string name="error">请求失败！参数错误</string>
+    <string name="error_401_not_auth">帐号或密码错误</string>
+    <string name="error_520_time_out">网络不给力，请稍后重试</string>
+    <string name="common_error_tips">操作失败,错误代号:%s</string>
+    <string name="title_activity_setup_upload_pic">SetupUploadPic</string>
+    <string name="title_activity_setup_upload_success">SetupUploadSuccess</string>
+    <string name="title_activity_setup_tips_actiivty">SetupTipsActiivty</string>
+
+    <!-- 版本检测更新 -->
+
+    <string name="soft_update_no">当前为最新版本</string>
+    <string name="soft_update_title">软件更新</string>
+    <string name="soft_update_info">检测到新版本，立即更新吗</string>
+    <string name="soft_update_updatebtn">更新</string>
+    <string name="soft_update_later">稍后更新</string>
+    <string name="soft_updating">正在更新</string>
+    <string name="soft_update_cancel">取消</string>
+
+    <!-- 卖车秘籍 -->
+    <string name="tips_a">卖车三句诀，车惠通卖车就是这么简单！</string>
+    <string name="tips_b">                                               第一诀：一次报底价</string>
+    <string name="tips_c">因为车惠卖车通是一个比价购车平台，不仅你一个人在给消费者报价，所以一定要一次要把底价报出来，用户会根据裸车价比较。特别是您有优势的车源，可以先和公司争取好更底的优惠！\n</string>
+    <string name="tips_d">第二诀：保险算实价</string>
+    <string name="tips_e">消费者通过车惠不仅比较车价，同时也会比较车险价格，所以车险也不要玩虚的。不用担心消费者会到店各种再议价，因为，消费者能看到您的联系方式时，他已经在车惠付了订金了。\n</string>
+    <string name="tips_f">第三诀：务必多赠送</string>
+    <string name="tips_g">消费者买车图个实惠，多附加一些有含金量的赠送，更容易打动消费者。包括上牌费、各项杂费也尽可能一步优惠到位！</string>
+
+    <!-- 订单详情 -->
+    <string name="order_detial_tips">②抢单报价模式，要报最低价一口价才有竞争力!</string>
+    <string name="title_activity_login_question_acticity">LoginQuestionActicity</string>
+    <string name="title_activity_login_verify_actiivty">LoginVerifyActiivty</string>
+    <string name="title_activity_login_change_pwd">LoginChangePwd</string>
+    <string name="title_activity_my_order_commit_finish">MyOrderCommitFinishActivity</string>
+    <string name="title_activity_feedback_success">FeedbackSuccess</string>
+
+</resources>

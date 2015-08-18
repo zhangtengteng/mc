@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/LinearLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/main_background_gray"
+    android:orientation="vertical" >
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="fill_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/little_gray" />
+
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white" >
+
+        <RadioGroup
+            android:id="@+id/tab_menu"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@android:color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <RadioButton
+                android:id="@+id/rbOrderCheck"
+                style="@style/TabMenuText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@null"
+                android:button="@null"
+                android:checked="true"
+                android:drawableTop="@drawable/tab_order_check"
+                android:gravity="center_horizontal"
+                android:text="@string/tab_one"
+                android:textColor="@drawable/tab_order_check_txt" />
+
+            <RadioButton
+                android:id="@+id/rbOrderCount"
+                style="@style/TabMenuText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@null"
+                android:button="@null"
+                android:checked="false"
+                android:drawableTop="@drawable/tab_order_account"
+                android:gravity="center_horizontal"
+                android:text="@string/tab_two"
+                android:textColor="@drawable/tab_order_check_txt" />
+
+            <RadioButton
+                android:id="@+id/rbMessage"
+                style="@style/TabMenuText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@null"
+                android:button="@null"
+                android:checked="false"
+                android:drawableTop="@drawable/tab_message"
+                android:gravity="center_horizontal"
+                android:text="@string/tab_three"
+                android:textColor="@drawable/tab_order_check_txt" />
+
+            <RadioButton
+                android:id="@+id/rbSet"
+                style="@style/TabMenuText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@null"
+                android:button="@null"
+                android:checked="false"
+                android:drawableTop="@drawable/tab_set"
+                android:gravity="center_horizontal"
+                android:text="@string/tab_four"
+                android:textColor="@drawable/tab_order_check_txt" />
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/tv_number"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="53dp"
+            android:background="@drawable/corners_bg_red"
+            android:gravity="center"
+            android:text="7"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+    </FrameLayout>
+
+</LinearLayout>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical" >
+
+    <TextView
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        android:text="实名认证成功"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:textSize="15sp" />
+    <TextView
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="拍摄上传证件照片，可大幅提高账户安全级别"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/detail_gray"
+        android:textSize="15sp" />
+	<Button
+	    android:id="@+id/btn_next1"
+	    android:layout_marginLeft="5dp"
+	    android:layout_marginRight="5dp"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/corners_login_btn_bg"
+        android:text="拍摄证件照片"
+        android:textColor="@color/white"
+        android:textSize="20sp" />
+</LinearLayout>

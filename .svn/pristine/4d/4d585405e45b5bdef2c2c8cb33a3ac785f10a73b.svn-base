@@ -1,0 +1,65 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_background_gray"
+    android:orientation="vertical"
+     >
+    <include
+        layout="@layout/top_title" />
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#9000"
+        android:textSize="18sp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:text="@string/tips_a" />
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#9000"
+        android:layout_marginLeft="20dp"
+        android:textSize="17sp"
+        android:layout_marginTop="8dp"
+        android:text="@string/tips_b" />
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:textColor="#9000"
+        android:textSize="16sp"
+        android:layout_marginTop="8dp"
+        android:text="@string/tips_c" />
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#9000"
+        android:textSize="17sp"
+        android:layout_marginLeft="20dp"
+        android:text="@string/tips_d" />
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:textColor="#9000"
+        android:textSize="16sp"
+        android:layout_marginTop="8dp"
+        android:text="@string/tips_e" />
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#9000"
+        android:layout_marginLeft="20dp"
+        android:textSize="17sp"
+        android:text="@string/tips_f" />
+       <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:textColor="#9000"
+        android:textSize="16sp"
+        android:layout_marginTop="8dp"
+        android:text="@string/tips_g" />
+
+</LinearLayout>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LinearLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <include
+        android:id="@+id/top_title"
+        layout="@layout/top_title" />
+
+    <fragment
+        android:id="@+id/fgOrderCheck"
+        android:name="com.chehui.maiche.enquiry.OrderCheckFragment"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.0" />
+
+    <fragment
+        android:id="@+id/fgOrderCount"
+        android:name="com.chehui.maiche.myorder.MyOrderFragment"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.0" />
+
+    <fragment
+        android:id="@+id/fgMessage"
+        android:name="com.chehui.maiche.rabate.RabateFragment"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.0" />
+
+    <fragment
+        android:id="@+id/fgSet"
+        android:name="com.chehui.maiche.setup.SetFragment"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.0" />
+
+    <include layout="@layout/fragment_foot" />
+
+</LinearLayout>

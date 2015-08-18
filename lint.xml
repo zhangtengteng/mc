@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <issue id="HandlerLeak" severity="ignore" />
+    <issue id="InflateParams" severity="ignore" />
+    <issue id="WorldReadableFiles">
+        <ignore path="src/com/chehui/maiche/login/WelcomeActivity.java" />
+    </issue>
+</lint>

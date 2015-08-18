@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/FrameLayout1"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:layout_gravity="center"
+    android:background="@color/tbg" >
+
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="200dp"
+        android:background="@drawable/corner_bg_gray"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:paddingBottom="10dp"
+            android:paddingTop="5dp"
+            android:text="品牌修改"
+            android:textColor="@color/black_modify"
+            android:textSize="15sp" />
+
+      
+        <TextView 
+            android:id="@+id/tv_modify_brand"
+            android:layout_width="220dp"
+            android:layout_height="33dp"
+           android:layout_gravity="center_horizontal"
+           android:clickable="true"
+           android:gravity="center"
+           android:textColor="@color/light_gray"
+           android:background="@drawable/corner_bg_gray"
+           />
+
+       <View 
+           android:layout_width="match_parent"
+           android:layout_height="1dp"
+           android:background="@color/little_gray"
+           android:layout_marginTop="12dp"
+           android:layout_marginBottom="12dp"/>
+            <Button
+                android:id="@+id/btn_modify_brand_sure"
+                android:layout_width="210dp"
+                android:layout_height="33dp"
+                android:background="@color/top_title"
+                android:text="@string/common_confirm"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@android:color/white"
+                android:layout_marginBottom="10dp"
+                android:textSize="15sp" />
+       
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/img_modify_brand_close"
+        android:layout_marginTop="190dp"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_gravity="right"
+        android:src="@drawable/guanbi" />
+
+</FrameLayout>

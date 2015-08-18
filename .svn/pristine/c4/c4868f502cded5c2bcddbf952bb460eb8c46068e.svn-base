@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_background_gray" >
+
+    <include layout="@layout/top_title" />
+
+    <LinearLayout
+        android:id="@+id/ll_add_user"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="70dp"
+        android:background="@drawable/set_bg_down"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/login_user_left" />
+
+        <com.chehui.maiche.custom.EditTextWithDel
+            android:id="@+id/et_add_userName"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@null"
+            android:gravity="center"
+            android:hint="@string/login_user_hint"
+            android:singleLine="true"
+            android:textColor="@color/black" />
+
+        <ImageView
+            android:id="@+id/iv_select"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:visibility="invisible" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_add_pwd"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/ll_add_user"
+        android:background="@drawable/set_bg_up"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/login_pwd_left" />
+
+        <com.chehui.maiche.custom.EditTextWithDel
+            android:id="@+id/et__add_pwd"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@null"
+            android:gravity="center"
+            android:hint="@string/login_pwd_hint"
+            android:password="true"
+            android:singleLine="true"
+            android:textColor="@color/black" />
+
+        <ImageView
+            android:id="@+id/iv_pwd_errow"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:visibility="invisible" />
+    </LinearLayout>
+
+</RelativeLayout>

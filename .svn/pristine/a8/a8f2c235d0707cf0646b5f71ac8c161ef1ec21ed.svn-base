@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal" >
+
+    <LinearLayout
+        android:padding="10dp"
+        android:id="@+id/rabate_right_layout"
+        android:layout_weight="1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/rabate_txt_detail_list_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="回复报价"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_marginTop="5dp"
+            android:id="@+id/rabate_txt_detail_list_date_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2015-07-21T10:49:50"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <TextView
+        android:textStyle="bold"
+        android:id="@+id/rabate_txt_detail_list_SellerGet"
+        android:layout_width="wrap_content"
+        android:layout_height="55dp"
+        android:layout_marginRight="10dp"
+        android:gravity="center_vertical"
+        android:text="+888"
+        android:textColor="@color/red"
+        android:textSize="17sp" />
+
+</LinearLayout>
