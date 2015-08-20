@@ -1,53 +1,28 @@
 package com.chehui.maiche.myorder;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import android.app.LocalActivityManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.chehui.maiche.R;
-import com.chehui.maiche.SharedPreManager;
 import com.chehui.maiche.comm.CommonData;
-import com.chehui.maiche.custom.AutoListView;
-import com.chehui.maiche.custom.AutoListView.OnLoadListener;
-import com.chehui.maiche.custom.AutoListView.OnRefreshListener;
 import com.chehui.maiche.custom.BaseFragment;
-import com.chehui.maiche.enquiry.DownImage;
-import com.chehui.maiche.enquiry.DownImage.ImageCallBack;
-import com.chehui.maiche.httpserve.HttpService;
 import com.chehui.maiche.utils.LogN;
-import com.chehui.maiche.utils.ToastUtils;
-import com.chehui.maiche.utils.Utils;
 
 /**
  * 
@@ -264,3 +239,4 @@ public class MyOrderFragment extends BaseFragment implements OnClickListener {
 		}
 	}
 }
+	

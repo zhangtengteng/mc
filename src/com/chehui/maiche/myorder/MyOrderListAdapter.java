@@ -69,11 +69,15 @@ public class MyOrderListAdapter extends BaseAdapter {
 		View line_top = null;
 		View line_bottom = null;
 		View line_last = null;
-		if (convertView == null) {
-			 
+//		if (convertView == null) {
 			// 生成条目对象
+		if(listTOrder.get(position).get("OrderState").equals("1")){
+			convertView = inflater.inflate(R.layout.fragment_my_order_item_gray,
+					null);
+		}else{
 			convertView = inflater.inflate(R.layout.fragment_my_order_item,
 					null);
+		}
 			img_CarImage = (ImageView) convertView
 					.findViewById(R.id.myOrderListItem_img_carImage);
 
@@ -89,27 +93,27 @@ public class MyOrderListAdapter extends BaseAdapter {
 			line_bottom = convertView.findViewById(R.id.line_below);
 			line_last = convertView.findViewById(R.id.line_last);
 
-			ViewCahe viewCahe = new ViewCahe();
-			viewCahe.CarImage = img_CarImage;
-			viewCahe.CarDetail = txt_CarDetail;
-			viewCahe.CreateDateCN = txt_CreateDateCN;
-			viewCahe.FloorPriceCN = txt_FloorPriceCN;
-			viewCahe.line_top = line_top;
-			viewCahe.line_bottom = line_bottom;
-			viewCahe.line_last = line_last;
+//			ViewCahe viewCahe = new ViewCahe();
+//			viewCahe.CarImage = img_CarImage;
+//			viewCahe.CarDetail = txt_CarDetail;
+//			viewCahe.CreateDateCN = txt_CreateDateCN;
+//			viewCahe.FloorPriceCN = txt_FloorPriceCN;
+//			viewCahe.line_top = line_top;
+//			viewCahe.line_bottom = line_bottom;
+//			viewCahe.line_last = line_last;
 			
-			convertView.setTag(viewCahe);
-		} else {
-			ViewCahe viewCahe = (ViewCahe) convertView.getTag();
-			img_CarImage = viewCahe.CarImage;
-			txt_CarDetail = viewCahe.CarDetail;
-			txt_CreateDateCN = viewCahe.CreateDateCN;
-			txt_FloorPriceCN = viewCahe.FloorPriceCN;
-			line_top = viewCahe.line_top;
-			line_bottom = viewCahe.line_bottom;
-			line_last = viewCahe.line_last;
-
-		}
+//			convertView.setTag(viewCahe);
+//		} else {
+//			ViewCahe viewCahe = (ViewCahe) convertView.getTag();
+//			img_CarImage = viewCahe.CarImage;
+//			txt_CarDetail = viewCahe.CarDetail;
+//			txt_CreateDateCN = viewCahe.CreateDateCN;
+//			txt_FloorPriceCN = viewCahe.FloorPriceCN;
+//			line_top = viewCahe.line_top;
+//			line_bottom = viewCahe.line_bottom;
+//			line_last = viewCahe.line_last;
+//
+//		}
 
 		// 如果是第一个条目
 		if (position == 0) {
@@ -121,9 +125,7 @@ public class MyOrderListAdapter extends BaseAdapter {
 			line_last.setVisibility(View.VISIBLE);
 		}
 		
-		if(listTOrder.get(position).get("OrderState").equals("1")){
-//			convertView.setBackgroundColor(R.color.main_background_gray);
-		}
+		
 		// 绑定数据
 		DownImage downImage = new DownImage(url
 				+ listTOrder.get(position).get("CarImage"));

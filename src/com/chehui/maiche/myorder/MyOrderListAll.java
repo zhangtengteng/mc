@@ -18,8 +18,10 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.TextView;
 
@@ -44,10 +46,10 @@ import com.chehui.maiche.utils.Utils;
  * 
  */
 public class MyOrderListAll extends BaseActivity implements OnRefreshListener,
-		OnLoadListener,OnItemClickListener {
+		OnLoadListener, OnItemClickListener {
 	private AutoListView autoListView;
 	private String state;
-	private int currentPage=1;
+	private int currentPage = 1;
 	/** 需要提交的参数 */
 	private String params;
 	/** 返回的json数据 */
@@ -61,6 +63,8 @@ public class MyOrderListAll extends BaseActivity implements OnRefreshListener,
 	private TextView tv_empty;
 	/** for receive customer msg from jpush server */
 	private MessageReceiver mMessageReceiver;
+	/** 定义一个变量，来标识是否退出 */
+	private static boolean isExit = false;
 	/***
 	 * 接收消息
 	 */
@@ -79,6 +83,13 @@ public class MyOrderListAll extends BaseActivity implements OnRefreshListener,
 
 		}
 	};
+	Handler mHandler2 = new Handler() {
+		@Override
+		public void handleMessage(Message msg) {
+			super.handleMessage(msg);
+			isExit = false;
+		}
+	};
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -93,8 +104,10 @@ public class MyOrderListAll extends BaseActivity implements OnRefreshListener,
 		autoListView = (AutoListView) findViewById(R.id.listview_order);
 		autoListView.setOnRefreshListener(this);
 		autoListView.setOnLoadListener(this);
-		autoListView.setOnItemClickListener(this);		tv_empty = (TextView) findViewById(R.id.tv_empty);
-		autoListView.setEmptyView(tv_empty);	}
+		autoListView.setOnItemClickListener(this);
+		tv_empty = (TextView) findViewById(R.id.tv_empty);
+		autoListView.setEmptyView(tv_empty);
+	}
 
 	/**
 	 * 初始化数据
@@ -290,10 +303,9 @@ public class MyOrderListAll extends BaseActivity implements OnRefreshListener,
 					list.clear();
 				}
 				list.addAll(tempList);
-				System.out.println("++++++++++++++========="+list);
-				LogN.e(MyOrderListAll.this, "jsonArray="+jsonArray.length());
-				LogN.e(MyOrderListAll.this, "tempList="+tempList.size());
-				LogN.e(MyOrderListAll.this, "list.size="+list.size());
+				LogN.e(MyOrderListAll.this, "jsonArray=" + jsonArray.length());
+				LogN.e(MyOrderListAll.this, "tempList=" + tempList.size());
+				LogN.e(MyOrderListAll.this, "list.size=" + list.size());
 				if (adapter == null) {
 					adapter = new MyOrderListAdapter(MyOrderListAll.this, list);
 					autoListView.setAdapter(adapter);
@@ -311,7 +323,7 @@ public class MyOrderListAll extends BaseActivity implements OnRefreshListener,
 				adapter.setData(list);
 			}
 		} finally {
-			
+
 			if (type == AutoListView.REFRESH) {
 				autoListView.onRefreshComplete();
 			} else if (type == AutoListView.LOAD) {
@@ -324,9 +336,10 @@ public class MyOrderListAll extends BaseActivity implements OnRefreshListener,
 
 	}
 
-	private void toOrderDetailActivity(int position){
-		Intent intent = new Intent(MyOrderListAll.this, MyOrderDetialActtivity.class);
-		Map<String, String> myOrder = list.get(position-1);
+	private void toOrderDetailActivity(int position) {
+		Intent intent = new Intent(MyOrderListAll.this,
+				MyOrderDetialActtivity.class);
+		Map<String, String> myOrder = list.get(position - 1);
 		// 根据state【0,1,2】判断订单的状态，待接受，已接受，已支付
 		String State = myOrder.get("State");
 		// if (state.equals("1") || state.equals("2"))
@@ -353,6 +366,7 @@ public class MyOrderListAll extends BaseActivity implements OnRefreshListener,
 		String Cityname = myOrder.get("Cityname");
 		String OrderID = myOrder.get("OrderID");
 		String CreateDateCN = myOrder.get("CreateDateCN");
+		String OrderState = myOrder.get("OrderState");
 
 		intent.putExtra("Cityname", Cityname);
 		intent.putExtra("CreateDateCN", CreateDateCN);
@@ -375,17 +389,18 @@ public class MyOrderListAll extends BaseActivity implements OnRefreshListener,
 		intent.putExtra("QuoteID", QuoteID);
 		intent.putExtra("OrderID", OrderID);
 		intent.putExtra("State", State);
+		intent.putExtra("OrderState", OrderState);
 
 		startActivity(intent);
 	}
-	
+
 	/**
 	 * 加载更多
 	 */
 	@Override
 	public void onLoad() {
 		params = sellerid + "|" + state + "|" + String.valueOf(++currentPage);
-		LogN.e(MyOrderListAll.this, "onLoad ====="+params);
+		LogN.e(MyOrderListAll.this, "onLoad =====" + params);
 		getMyOrderData(params, AutoListView.LOAD);
 	}
 
@@ -396,15 +411,16 @@ public class MyOrderListAll extends BaseActivity implements OnRefreshListener,
 	public void onRefresh() {
 		currentPage = 1;
 		params = sellerid + "|" + state + "|" + String.valueOf(currentPage);
-		LogN.e(MyOrderListAll.this, "onRefresh ====="+params);
+		LogN.e(MyOrderListAll.this, "onRefresh =====" + params);
 		getMyOrderData(params, AutoListView.REFRESH);
 	}
 
 	@Override
-	public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+	public void onItemClick(AdapterView<?> arg0, View arg1, int position,
+			long arg3) {
 		toOrderDetailActivity(position);
 	}
-	
+
 	/**
 	 * JPush receiver
 	 */
@@ -415,13 +431,39 @@ public class MyOrderListAll extends BaseActivity implements OnRefreshListener,
 		filter.addAction(CommonData.MESSAGE_RECEIVED_ACTION);
 		registerReceiver(mMessageReceiver, filter);
 	}
+
 	public class MessageReceiver extends BroadcastReceiver {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			if (CommonData.MESSAGE_RECEIVED_ACTION.equals(intent.getAction())) {
 				LogN.e(this, " MyOrderListAll is  on  receiver!!!!");
+				currentPage = 1;
+				params = sellerid + "|" + state + "|"
+						+ String.valueOf(currentPage);
 				getMyOrderData(params, AutoListView.REFRESH);
 			}
+		}
+	}
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			exit();
+			return false;
+		}
+		return super.onKeyDown(keyCode, event);
+	}
+
+	private void exit() {
+		if (!isExit) {
+			isExit = true;
+			Toast.makeText(getApplicationContext(), "再按一次退出程序",
+					Toast.LENGTH_SHORT).show();
+			// 利用handler延迟发送更改状态信息
+			mHandler2.sendEmptyMessageDelayed(0, 2000);
+		} else {
+			finish();
+			System.exit(0);
 		}
 	}
 }

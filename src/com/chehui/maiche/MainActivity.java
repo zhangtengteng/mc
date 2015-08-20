@@ -373,7 +373,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 					}
 				});
 
-		if (CommonData.LOGINFLAG = true) {
+		if (CommonData.LOGINFLAG) {
 			startActivity(new Intent(MainActivity.this, LoginActivity.class));
 			System.exit(0);
 		}

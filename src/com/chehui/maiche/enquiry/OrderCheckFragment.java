@@ -103,7 +103,7 @@ public class OrderCheckFragment extends BaseFragment {
 		listView.setOnRefreshListener(new OnRefreshListener() {
 			@Override
 			public void onRefresh() {
-				// ToastUtils.showShortToast(getActivity(), "onRefresh");
+//				ToastUtils.showShortToast(getActivity(), "onRefresh");
 				page = 1;
 				postParams = sellbrand1 + "|" + sellbrand1 + "|" + sellbrand1
 						+ "|" + testCityname + "|" + sellerid + "|"
@@ -117,7 +117,7 @@ public class OrderCheckFragment extends BaseFragment {
 
 			@Override
 			public void onLoad() {
-				// ToastUtils.showShortToast(getActivity(), "onLoad");
+//				ToastUtils.showShortToast(getActivity(), "onLoad");
 				page++;
 				System.out.println("onLoad =======  page=" + page);
 				postParams = sellbrand1 + "|" + sellbrand1 + "|" + sellbrand1
@@ -381,7 +381,7 @@ public class OrderCheckFragment extends BaseFragment {
 				}
 				LogN.d(OrderCheckFragment.this,
 						"adapter.getCount()" + adapter.getCount());
-			} else {
+				} else {
 				ToastUtils.showShortToast(
 						getActivity().getApplicationContext(), mess);
 			}
@@ -476,8 +476,7 @@ public class OrderCheckFragment extends BaseFragment {
 			View line_top = null;
 			View line_bottom = null;
 			View line_last = null;
-			// int type = getItemViewType(position);
-			if (convertView == null) {
+//			if (convertView == null) {
 				// 生成条目对象
 				convertView = inflater.inflate(
 						R.layout.fragment_order_check_item2, null);
@@ -508,34 +507,34 @@ public class OrderCheckFragment extends BaseFragment {
 				line_bottom = convertView.findViewById(R.id.line_below);
 				line_last = convertView.findViewById(R.id.line_last);
 
-				ViewCahe viewCahe = new ViewCahe();
-				viewCahe.CarImage = img_CarImage;
-				viewCahe.SeriesName = txt_SeriesName;
-				viewCahe.telNum = txt_PhoneNum;
-				viewCahe.IsBaojia = txt_IsBaojia;
-				viewCahe.CarName = txt_CarName;
-				viewCahe.CarColor = txt_CarColor;
-				viewCahe.PayMode = txt_PayMode;
-				viewCahe.BeginDate = txt_BeginDate;
-				viewCahe.line_top = line_top;
-				viewCahe.line_bottom = line_bottom;
-				viewCahe.line_last = line_last;
-
-				convertView.setTag(viewCahe);
-			} else {
-				ViewCahe viewCahe = (ViewCahe) convertView.getTag();
-				img_CarImage = viewCahe.CarImage;
-				txt_SeriesName = viewCahe.SeriesName;
-				txt_PhoneNum = viewCahe.telNum;
-				txt_IsBaojia = viewCahe.IsBaojia;
-				txt_CarName = viewCahe.CarName;
-				txt_CarColor = viewCahe.CarColor;
-				txt_PayMode = viewCahe.PayMode;
-				txt_BeginDate = viewCahe.BeginDate;
-				line_top = viewCahe.line_top;
-				line_bottom = viewCahe.line_bottom;
-				line_last = viewCahe.line_last;
-			}
+//				ViewCahe viewCahe = new ViewCahe();
+//				viewCahe.CarImage = img_CarImage;
+//				viewCahe.SeriesName = txt_SeriesName;
+//				viewCahe.telNum = txt_PhoneNum;
+//				viewCahe.IsBaojia = txt_IsBaojia;
+//				viewCahe.CarName = txt_CarName;
+//				viewCahe.CarColor = txt_CarColor;
+//				viewCahe.PayMode = txt_PayMode;
+//				viewCahe.BeginDate = txt_BeginDate;
+//				viewCahe.line_top = line_top;
+//				viewCahe.line_bottom = line_bottom;
+//				viewCahe.line_last = line_last;
+				
+//				convertView.setTag(viewCahe);
+//			} else {
+//				ViewCahe viewCahe = (ViewCahe) convertView.getTag();
+//				img_CarImage = viewCahe.CarImage;
+//				txt_SeriesName = viewCahe.SeriesName;
+//				txt_PhoneNum = viewCahe.telNum;
+//				txt_IsBaojia = viewCahe.IsBaojia;
+//				txt_CarName = viewCahe.CarName;
+//				txt_CarColor = viewCahe.CarColor;
+//				txt_PayMode = viewCahe.PayMode;
+//				txt_BeginDate = viewCahe.BeginDate;
+//				line_top = viewCahe.line_top;
+//				line_bottom = viewCahe.line_bottom;
+//				line_last = viewCahe.line_last;
+//			}
 
 			// 绑定数据
 			DownImage downImage = new DownImage(url
@@ -625,5 +624,5 @@ public class OrderCheckFragment extends BaseFragment {
 		Intent intent = new Intent();
 		intent.setAction(CommonData.BAOJIA_RECEIVED_ACTION);
 		getActivity().sendBroadcast(intent);
-	}
+}
 }

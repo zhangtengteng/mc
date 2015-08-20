@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/main_background_gray"
+    android:orientation="vertical"
+      >
+
+      <View
+        android:id="@+id/line_top"
+        android:layout_width="fill_parent"
+        android:layout_height="0.5dp"
+        android:visibility="gone"
+        android:background="@color/little_gray" />  
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="6dp"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:id="@+id/myOrderListItem_img_carImage"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="10dp" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp" >
+
+                <TextView
+                    android:id="@+id/myOrderListItem_txt_CarDetail"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:padding="2dp"
+                    android:singleLine="true"
+                    android:text="宝马5系宝马"
+                    android:textColor="@color/black"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="2dp"
+                    android:text="•••"
+                    android:textColor="@color/detail_gray"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="我的报价："
+                    android:textColor="@color/detail_gray"
+                    android:textSize="11sp" />
+
+                <TextView
+                    android:id="@+id/myOrderListItem_txt_FloorPriceCN"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:text="10000"
+                    android:textColor="@color/orange"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:paddingLeft="2dp"
+                    android:text="万元"
+                    android:textColor="@color/detail_gray"
+                    android:textSize="11sp" />
+
+                <TextView
+                    android:id="@+id/myOrderListItem_txt_CreateDateCN"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:padding="2dp"
+                    android:text="2015/7/1"
+                    android:textColor="@color/detail_gray"
+                    android:textSize="10sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:id="@+id/line_below"
+        android:layout_width="fill_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginLeft="10dp"
+        android:background="@color/little_gray" />
+    
+       <View
+        android:id="@+id/line_last"
+        android:layout_width="fill_parent"
+        android:layout_height="0.5dp"
+        android:visibility="gone"
+        android:background="@color/little_gray" /> 
+
+</LinearLayout>
