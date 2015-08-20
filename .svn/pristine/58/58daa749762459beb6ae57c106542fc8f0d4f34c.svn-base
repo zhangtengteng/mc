@@ -1,0 +1,48 @@
+package com.chehui.maiche.setup;
+
+import com.chehui.maiche.ActivityManager;
+import com.chehui.maiche.BaseActivity;
+import com.chehui.maiche.R;
+
+import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+
+/**
+ * 
+ * @author zzp
+ *         <P>
+ *         验证手机号——跳转信息修改界面——分别根据所选条目跳转
+ *         <P>
+ *
+ */
+public class SetupModifyPhoneVerification extends BaseActivity {
+
+	private Button safe_btn_verification;
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_setup_modify_phoneverification);
+		initTitleView(-1, 255, R.string.set_safe_verification, 255, -1, 0);
+		initWidgets();
+	}
+
+	/**
+	 * 初始化组件
+	 */
+	private void initWidgets() {
+
+		safe_btn_verification = (Button) findViewById(R.id.setup_modify_safe_btn_verification);
+		safe_btn_verification.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+
+			}
+		});
+
+	}
+
+}

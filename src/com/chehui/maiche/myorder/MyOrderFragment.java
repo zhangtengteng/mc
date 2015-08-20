@@ -10,6 +10,31 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.LocalActivityManager;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.support.annotation.Nullable;
+import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+
 import com.chehui.maiche.R;
 import com.chehui.maiche.SharedPreManager;
 import com.chehui.maiche.comm.CommonData;
@@ -24,27 +49,6 @@ import com.chehui.maiche.utils.LogN;
 import com.chehui.maiche.utils.ToastUtils;
 import com.chehui.maiche.utils.Utils;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
-
 /**
  * 
  * @author zzp
@@ -55,33 +59,9 @@ import android.widget.TextView;
  */
 public class MyOrderFragment extends BaseFragment implements OnClickListener {
 
-	private static final String TAG = "MyOrderFragment";
-	/** 自动刷新listView */
-	private AutoListView mPullToRefreshListView;
-
 	private View mInflater;
 
-	private String state;
-	/** id值 */
-	private String sellerid;
-	/** 需要提交的参数 */
-	private String params;
-
-	/** 返回的json数据 */
-	private String json;
-
-	/** 存储返回数据 */
-	private List<Map<String, String>> list = new ArrayList<Map<String, String>>();
-	/** 待接收 */
-	private List<Map<String, String>> listWait = new ArrayList<Map<String, String>>();
-	/** 已接受 */
-	private List<Map<String, String>> listAccept = new ArrayList<Map<String, String>>();
-	/** 已成交 */
-	private List<Map<String, String>> listOk = new ArrayList<Map<String, String>>();
 	private int currentIndex;
-	private Map<String, String> map;
-
-	private MyOrderAdapter adapter;
 
 	private Button btn_all;
 
@@ -95,32 +75,106 @@ public class MyOrderFragment extends BaseFragment implements OnClickListener {
 	// for receive customer msg from jpush server
 	private MessageReceiver mMessageReceiver;
 
+	// viewPager
+	ViewPager pager;
+	@SuppressWarnings("deprecation")
+	LocalActivityManager manager;
+
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-		mInflater = inflater.inflate(R.layout.fragment_my_order, container, false);
-		// used for receive msg
-		registerMessageReceiver();
-		initWidget();
-		initData();
-		getMyOrderData(params);
-		// 全部报价
-		allOrder();
-
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		mInflater = inflater.inflate(R.layout.fragment_my_order, container,
+				false);
 		return mInflater;
+	}
+
+	@Override
+	public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+		registerMessageReceiver();// used for receive msg
+		manager = new LocalActivityManager(getActivity(), true);
+		manager.dispatchCreate(savedInstanceState);
+		initWidget();
+		initPagerViewer();
+	}
+
+	/**
+	 * 初始化PageViewer
+	 */
+	private void initPagerViewer() {
+		pager = (ViewPager) getActivity().findViewById(R.id.view_pager);
+		final ArrayList<View> list = new ArrayList<View>();
+		// 全部报价
+		Intent intent1 = new Intent(getActivity(), MyOrderListAll.class);
+		list.add(getView("0", intent1));
+		// 待接收
+		Intent intent2 = new Intent(getActivity(), MyOrderListWait.class);
+		list.add(getView("1", intent2));
+		// 已经接受
+		Intent intent3 = new Intent(getActivity(), MyOrderListAccept.class);
+		list.add(getView("2", intent3));
+		// 已经成交
+		Intent intent4 = new Intent(getActivity(), MyOrderListOk.class);
+		list.add(getView("3", intent4));
+
+		pager.setAdapter(new MyPagerAdapter(list));
+		pager.setCurrentItem(0);
+		pager.setOnPageChangeListener(new OnPageChangeListener() {
+
+			@Override
+			public void onPageSelected(int position) {
+				System.out.println("onPageSelected=" + position);
+				if (position == 0) {
+					currentIndex = 0;
+					setIndexSelected();
+					btn_all.setSelected(true);
+					currentSelectedView = btn_all;
+				}else if(position == 1){
+					currentIndex = 1;
+					setIndexSelected();
+					btn_waitAccept.setSelected(true);
+					currentSelectedView = btn_waitAccept;
+				}else if(position == 2){
+					currentIndex = 2;
+					setIndexSelected();
+					btn_hadAccept.setSelected(true);
+					currentSelectedView = btn_hadAccept;
+				}else if(position == 3){
+					currentIndex = 3;
+					setIndexSelected();
+					btn_hadTransac.setSelected(true);
+					currentSelectedView = btn_hadTransac;
+				}
+			}
+
+			@Override
+			public void onPageScrolled(int arg0, float arg1, int arg2) {
+
+			}
+
+			@Override
+			public void onPageScrollStateChanged(int arg0) {
+
+			}
+		});
+
+	}
+
+	/**
+	 * 通过activity获取视图
+	 * 
+	 * @param id
+	 * @param intent
+	 * @return
+	 */
+	@SuppressWarnings("deprecation")
+	private View getView(String id, Intent intent) {
+		return manager.startActivity(id, intent).getDecorView();
 	}
 
 	@Override
 	public void onStart() {
 		super.onStart();
-		if (CommonData.ISMODIFYPRICE == true || CommonData.ISMYORDERFRAGMENTREFRESH == true) {
-			initData();
-			getMyOrderData(params);
-			// 全部报价
-			allOrder();
-			CommonData.ISMODIFYPRICE = false;
-			CommonData.ISMYORDERFRAGMENTREFRESH = false;
-		}
 
 		if (currentSelectedView == null) {
 			currentSelectedView = btn_all;
@@ -130,9 +184,12 @@ public class MyOrderFragment extends BaseFragment implements OnClickListener {
 
 	private void initWidget() {
 		btn_all = (Button) mInflater.findViewById(R.id.myOrder_btn_all);
-		btn_waitAccept = (Button) mInflater.findViewById(R.id.myOrder_btn_waitAccept);
-		btn_hadAccept = (Button) mInflater.findViewById(R.id.myOrder_btn_hadAccept);
-		btn_hadTransac = (Button) mInflater.findViewById(R.id.myOrder_btn_hadTransac);
+		btn_waitAccept = (Button) mInflater
+				.findViewById(R.id.myOrder_btn_waitAccept);
+		btn_hadAccept = (Button) mInflater
+				.findViewById(R.id.myOrder_btn_hadAccept);
+		btn_hadTransac = (Button) mInflater
+				.findViewById(R.id.myOrder_btn_hadTransac);
 
 		btn_all.setOnClickListener(this);
 		btn_hadAccept.setOnClickListener(this);
@@ -141,490 +198,12 @@ public class MyOrderFragment extends BaseFragment implements OnClickListener {
 
 	}
 
-	/***
-	 * 全部报价
-	 */
-	private void allOrder() {
-		mPullToRefreshListView = (AutoListView) mInflater.findViewById(R.id.myOrder_frag_list);
-		/** 刷新 */
-		mPullToRefreshListView.setOnRefreshListener(new OnRefreshListener() {
-
-			@Override
-			public void onRefresh() {
-				getMyOrderData(params);
-				if (adapter != null) {
-					adapter.notifyDataSetChanged();
-
-				}
-			}
-		});
-
-		mPullToRefreshListView.setOnLoadListener(new OnLoadListener() {
-
-			@Override
-			public void onLoad() {
-				page++;
-				getMyOrderData(params);
-				if (adapter != null) {
-					adapter.notifyDataSetChanged();
-
-				}
-
-			}
-		});
-
-		/** 条目点击事件 */
-		mPullToRefreshListView.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				Intent intent = new Intent(getActivity(), MyOrderDetialActtivity.class);
-				Map<String, String> myOrder = list.get(position-1);
-				// 根据state【0,1,2】判断订单的状态，待接受，已接受，已支付
-				String State = myOrder.get("State");
-				// if (state.equals("1") || state.equals("2"))
-				// return;
-				String QuoteID = myOrder.get("QuoteID");
-				String SellerID = myOrder.get("SellerID");
-				String Tel = myOrder.get("Tel");
-				String CarDetail = myOrder.get("CarDetail");
-				String CarImage = myOrder.get("CarImage");
-				String Guideprice = myOrder.get("Guideprice");
-				String CarColor = myOrder.get("CarColor");
-				String PayMode = myOrder.get("PayMode");
-				String CarPlan = myOrder.get("CarPlan");
-				String CarAddress = myOrder.get("CarAddress");
-				String FloorPriceCN = myOrder.get("FloorPriceCN");
-
-				String InsurancePrice = myOrder.get("InsurancePrice");
-				String LicensePrice = myOrder.get("LicensePrice");
-				String PurchaseTax = myOrder.get("PurchaseTax");
-				String Prize = myOrder.get("Prize");
-
-				String CarGift = myOrder.get("CarGift");
-				String DingPrice = myOrder.get("DingPrice");
-				String Cityname = myOrder.get("Cityname");
-				String OrderID = myOrder.get("OrderID");
-				String CreateDateCN = myOrder.get("CreateDateCN");
-
-				intent.putExtra("Cityname", Cityname);
-				intent.putExtra("CreateDateCN", CreateDateCN);
-				intent.putExtra("SellerID", SellerID);
-				intent.putExtra("Tel", Tel);
-				intent.putExtra("CarDetail", CarDetail);
-				intent.putExtra("CarImage", CarImage);
-				intent.putExtra("Guideprice", Guideprice);
-				intent.putExtra("CarColor", CarColor);
-				intent.putExtra("PayMode", PayMode);
-				intent.putExtra("CarPlan", CarPlan);
-				intent.putExtra("CarAddress", CarAddress);
-				intent.putExtra("FloorPriceCN", FloorPriceCN);
-				intent.putExtra("InsurancePrice", InsurancePrice);
-				intent.putExtra("LicensePrice", LicensePrice);
-				intent.putExtra("PurchaseTax", PurchaseTax);
-				intent.putExtra("Prize", Prize);
-				intent.putExtra("CarGift", CarGift);
-				intent.putExtra("DingPrice", DingPrice);
-				intent.putExtra("QuoteID", QuoteID);
-				intent.putExtra("OrderID", OrderID);
-				intent.putExtra("State", State);
-
-				startActivity(intent);
-			}
-		});
-	}
-
-	/**
-	 * 初始化数据
-	 */
-	private void initData() {
-		int id = SharedPreManager.getInstance().getInt(CommonData.USER_ID, 71);
-		int userState = SharedPreManager.getInstance().getInt(CommonData.USER_STATE, 0);
-
-		state = String.valueOf(userState);
-
-		sellerid = String.valueOf(id);
-
-		page = 1;
-
-		params = sellerid + "|" + state + "|" + String.valueOf(page);
-
-	}
-
-	/***
-	 * 获得请求数据
-	 * 
-	 * @param conParams
-	 *            请求参数
-	 */
-	private void getMyOrderData(final String conParams) {
-		if (!Utils.isNetworkAvailable(MyOrderFragment.this.getActivity())) {
-			ToastUtils.showShortToast(getActivity(), R.string.common_network_unavalible);
-			return;
-		}
-
-		showWaitDialog(R.string.common_requesting);
-		new AsyncTask<Void, Integer, String>() {
-
-			@Override
-			protected String doInBackground(Void... params) {
-				// 请求服务器
-				final List<BasicNameValuePair> parameters = new ArrayList<BasicNameValuePair>();
-				parameters.add(new BasicNameValuePair("classname", "SellerOperationService"));
-				parameters.add(new BasicNameValuePair("methodname", "GetQueteByID"));
-				parameters.add(new BasicNameValuePair("params", conParams));
-
-				Log.d(TAG + "查看参数类型", parameters.toString());
-				String response = HttpService.methodPost(CommonData.HTTP_URL, parameters);
-
-				return response;
-			}
-
-			@Override
-			protected void onPostExecute(String result) {
-				dismissWaitDialog();
-				if (result != null) {
-					json = result.toString();
-					Log.d(TAG + "我的报价界面所有数据", json);
-					analysisJson();
-				} else {
-					ToastUtils.showShortToast(getActivity(), "加载数据失败!");
-				}
-			}
-
-		}.execute();
-
-	}
-
-	/***
-	 * 解析返回的数据
-	 */
-	private void analysisJson() {
-		try {
-			JSONObject jsonObject = new JSONObject(json);
-			Boolean success = jsonObject.getBoolean("Success");
-			String mess = jsonObject.getString("Mess");
-			if (success != true) {
-				Message msg = handler.obtainMessage(CommonData.HTTP_HANDLE_FAILE);
-				Bundle data = msg.getData();
-				data.putString("mess", mess);
-				handler.sendMessage(msg);
-				return;
-			}
-
-			// 解析data数据
-			JSONArray jsonArray = jsonObject.getJSONArray("Data");
-			list.clear();
-			listWait.clear();
-			listAccept.clear();
-			listOk.clear();
-			if (jsonArray.length() != 0) {
-				for (int i = 0; i < jsonArray.length(); i++) {
-					JSONObject item = jsonArray.getJSONObject(i);
-					// 获取对象对应的值
-					int QuoteID = item.optInt("QuoteID");
-					int SellerID = item.optInt("SellerID");
-					int CarID = item.optInt("CarID");
-
-					// 根据state【0,1,2】判断订单的状态，待接受，已接受，已支付
-					int State = item.optInt("State");
-					String CarDetail = item.optString("CarDetail");
-					String Cityname = item.optString("Cityname");
-					String FloorPrice = item.optString("FloorPrice");
-					String FloorPriceCN = item.optString("FloorPriceCN");
-					String InsurancePrice = item.optString("InsurancePrice");
-					String LicensePrice = item.optString("LicensePrice");
-					String PurchaseTax = item.optString("PurchaseTax");
-					String Prize = item.optString("Prize");
-					String Guideprice = item.optString("Guideprice");
-					String BeginDate = item.optString("BeginDate");
-					String BegindateStr = item.optString("BegindateStr");
-					String EndDate = item.optString("EndDate");
-					String EffectiveTime = item.optString("EffectiveTime");
-					String CreateDate = item.optString("CreateDate");
-					String CreateDateCN = item.optString("CreateDateCN");
-					// String StateCN = item.optString("StateCN");
-					String DingPrice = item.optString("DingPrice");
-					String RegistrationFee = item.optString("RegistrationFee");
-					String CarDecoration = item.optString("CarDecoration");
-					String CarColor = item.optString("CarColor");
-					String CarGift = item.optString("CarGift");
-					String CarPlan = item.optString("CarPlan");
-					String PayMode = item.optString("PayMode");
-					String CarAddress = item.optString("CarAddress");
-					String Sellername = item.optString("Sellername");
-					String BrandName = item.optString("BrandName");
-					String SeriesName = item.optString("SeriesName");
-					String CarName = item.optString("CarName");
-					String Tel = item.optString("Tel");
-					String Ddbh = item.optString("Ddbh");
-					String UserID = item.optString("UserID");
-					String OrderNumber = item.optString("OrderNumber");
-					String ZongJia = item.optString("ZongJia");
-					String QitaZafei = item.optString("QitaZafei");
-					String CarYear = item.optString("CarYear");
-					String ClientID = item.optString("ClientID");
-					String ClientType = item.optString("ClientType");
-					String SeriesFace = item.optString("SeriesFace");
-					int SellerVipLevel = item.optInt("SellerVipLevel");
-					String CarImage = item.optString("CarImage");
-					String OrderID = item.optString("OrderID");
-					String UserName = item.optString("UserName");
-					boolean IsUserPay = item.optBoolean("IsUserPay");
-
-					map = new HashMap<String, String>();
-					map.put("QuoteID", String.valueOf(QuoteID));
-					map.put("SellerID", String.valueOf(SellerID));
-					map.put("CarID", String.valueOf(CarID));
-					map.put("CarDetail", CarDetail);
-					map.put("Cityname", Cityname);
-					map.put("FloorPrice", FloorPrice);
-					map.put("FloorPriceCN", FloorPriceCN);
-					System.out.println(FloorPrice + "++++++++++++++++++++" + FloorPriceCN);
-					map.put("InsurancePrice", InsurancePrice);
-					map.put("LicensePrice", LicensePrice);
-					map.put("PurchaseTax", PurchaseTax);
-					map.put("Prize", Prize);
-					map.put("Guideprice", Guideprice);
-					map.put("BeginDate", BeginDate);
-					map.put("BegindateStr", BegindateStr);
-					map.put("EndDate", EndDate);
-					map.put("EffectiveTime", EffectiveTime);
-					map.put("CreateDate", CreateDate);
-					map.put("CreateDateCN", CreateDateCN);
-					map.put("DingPrice", DingPrice);
-					map.put("RegistrationFee", RegistrationFee);
-					map.put("CarDecoration", CarDecoration);
-					map.put("CarColor", CarColor);
-					map.put("CarGift", CarGift);
-					map.put("CarPlan", CarPlan);
-					map.put("PayMode", PayMode);
-					map.put("CarAddress", CarAddress);
-					map.put("Sellername", Sellername);
-					map.put("BrandName", BrandName);
-					map.put("SeriesName", SeriesName);
-					map.put("CarName", CarName);
-					map.put("Tel", Tel);
-					map.put("Ddbh", Ddbh);
-					map.put("UserID", UserID);
-					map.put("OrderNumber", OrderNumber);
-					map.put("ZongJia", ZongJia);
-					map.put("QitaZafei", QitaZafei);
-					map.put("CarYear", CarYear);
-					map.put("ClientID", ClientID);
-					map.put("ClientType", ClientType);
-					map.put("SeriesFace", SeriesFace);
-					map.put("SellerVipLevel", String.valueOf(SellerVipLevel));
-					map.put("CarImage", CarImage);
-					map.put("OrderID", OrderID);
-					map.put("UserName", UserName);
-					map.put("State", String.valueOf(State));
-					map.put("IsUserPay", String.valueOf(IsUserPay));
-					list.add(map);
-
-					switch (State) {
-					// 根据state【0,1,2】判断订单的状态，待接受，已接受，已支付
-					case 0:
-						listWait.add(map);
-						break;
-					case 1:
-						listAccept.add(map);
-						break;
-					case 2:
-						listOk.add(map);
-						break;
-
-					default:
-						break;
-					}
-
-					switch (currentIndex) {
-					case 0:
-						setData(list);
-						break;
-					case 1:
-						setData(listWait);
-						break;
-					case 2:
-						setData(listAccept);
-						break;
-					case 3:
-						setData(listOk);
-						break;
-
-					default:
-						break;
-					}
-
-				}
-			}
-			mPullToRefreshListView.onRefreshComplete();
-			mPullToRefreshListView.onLoadComplete();
-			mPullToRefreshListView.setResultSize(list.size());
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-
-	}
-
-	/***
-	 * 接收消息
-	 */
-	private Handler handler = new Handler() {
-		@Override
-		public void handleMessage(Message msg) {
-			switch (msg.what) {
-			case CommonData.HTTP_HANDLE_FAILE:
-				Bundle data = msg.getData();
-				String result = data.getString("mess");
-				ToastUtils.showShortToast(getActivity().getApplicationContext(), result);
-				break;
-
-			default:
-				break;
-			}
-
-		}
-	};
-	private int page;
-
-	/**
-	 * 自定义适配器
-	 * 
-	 * @author zzp
-	 * 
-	 */
-	private class MyOrderAdapter extends BaseAdapter {
-
-		/** 异步加载图片的URL */
-		private static final String url = "http://upload.chehui.com/seriesface/";
-		/** 在绑定的数据 */
-		private List<Map<String, String>> listTOrder;
-		private LayoutInflater inflater;
-
-		@SuppressWarnings("unused")
-		private Context context;
-
-		public MyOrderAdapter(Context context, List<Map<String, String>> listTOder) {
-			super();
-			this.context = context;
-			this.listTOrder = listTOder;
-			this.inflater = LayoutInflater.from(context);
-
-		}
-
-		public void setData(List<Map<String, String>> listTOder) {
-			this.listTOrder = listTOder;
-			notifyDataSetChanged();
-		}
-
-		@Override
-		public int getCount() {
-			return listTOrder.size();
-		}
-
-		@Override
-		public Object getItem(int position) {
-			return listTOrder.get(position);
-		}
-
-		@Override
-		public long getItemId(int position) {
-			return position;
-		}
-
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-
-			final ImageView img_CarImage;
-			TextView txt_CarDetail = null;
-			TextView txt_CreateDateCN = null;
-			TextView txt_FloorPriceCN = null;
-			View line_top = null;
-			View line_bottom = null;
-			View line_last = null;
-			if (convertView == null) {
-				// 生成条目对象
-				convertView = inflater.inflate(R.layout.fragment_my_order_item, null);
-				img_CarImage = (ImageView) convertView.findViewById(R.id.myOrderListItem_img_carImage);
-
-				txt_CarDetail = (TextView) convertView.findViewById(R.id.myOrderListItem_txt_CarDetail);
-
-				txt_CreateDateCN = (TextView) convertView.findViewById(R.id.myOrderListItem_txt_CreateDateCN);
-
-				txt_FloorPriceCN = (TextView) convertView.findViewById(R.id.myOrderListItem_txt_FloorPriceCN);
-				line_top = convertView.findViewById(R.id.line_top);
-				line_bottom = convertView.findViewById(R.id.line_below);
-				line_last = convertView.findViewById(R.id.line_last);
-
-				ViewCahe viewCahe = new ViewCahe();
-				viewCahe.CarImage = img_CarImage;
-				viewCahe.CarDetail = txt_CarDetail;
-				viewCahe.CreateDateCN = txt_CreateDateCN;
-				viewCahe.FloorPriceCN = txt_FloorPriceCN;
-				viewCahe.line_top = line_top;
-				viewCahe.line_bottom = line_bottom;
-				viewCahe.line_last = line_last;
-				convertView.setTag(viewCahe);
-			} else {
-				ViewCahe viewCahe = (ViewCahe) convertView.getTag();
-				img_CarImage = viewCahe.CarImage;
-				txt_CarDetail = viewCahe.CarDetail;
-				txt_CreateDateCN = viewCahe.CreateDateCN;
-				txt_FloorPriceCN = viewCahe.FloorPriceCN;
-				line_top = viewCahe.line_top;
-				line_bottom = viewCahe.line_bottom;
-				line_last = viewCahe.line_last;
-
-			}
-
-			// 如果是第一个条目
-			if (position == 0) {
-				line_top.setVisibility(View.VISIBLE);
-			}
-			// 如果是最后一个条目
-			if (position == listTOrder.size() - 1) {
-				line_bottom.setVisibility(View.GONE);
-				line_last.setVisibility(View.VISIBLE);
-			}
-			// 绑定数据
-			DownImage downImage = new DownImage(url + listTOrder.get(position).get("CarImage"));
-			downImage.loadImage(new ImageCallBack() {
-
-				@Override
-				public void getDrawable(Drawable drawable) {
-					img_CarImage.setImageDrawable(drawable);
-				}
-			});
-
-			txt_CarDetail.setText(listTOrder.get(position).get("CarDetail"));
-			txt_CreateDateCN.setText(listTOrder.get(position).get("CreateDateCN"));
-			txt_FloorPriceCN.setText(listTOrder.get(position).get("FloorPriceCN"));
-			return convertView;
-		}
-
-		/**
-		 * 
-		 * @author zzp
-		 * 
-		 */
-		private final class ViewCahe {
-			public ImageView CarImage;
-			public TextView CarDetail;
-			public TextView CreateDateCN;
-			public TextView FloorPriceCN;
-			private View line_top, line_bottom, line_last;
-
-		}
-	}
-
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
 		// 全部报价
 		case R.id.myOrder_btn_all:
 			currentIndex = 0;
-			setData(list);
 			setIndexSelected();
 			btn_all.setSelected(true);
 			currentSelectedView = btn_all;
@@ -632,7 +211,6 @@ public class MyOrderFragment extends BaseFragment implements OnClickListener {
 		// 待接受
 		case R.id.myOrder_btn_waitAccept:
 			currentIndex = 1;
-			setData(listWait);
 			setIndexSelected();
 			btn_waitAccept.setSelected(true);
 			currentSelectedView = btn_waitAccept;
@@ -640,7 +218,6 @@ public class MyOrderFragment extends BaseFragment implements OnClickListener {
 		// 已接受
 		case R.id.myOrder_btn_hadAccept:
 			currentIndex = 2;
-			setData(listAccept);
 			setIndexSelected();
 			btn_hadAccept.setSelected(true);
 			currentSelectedView = btn_hadAccept;
@@ -648,25 +225,14 @@ public class MyOrderFragment extends BaseFragment implements OnClickListener {
 		// 已交易
 		case R.id.myOrder_btn_hadTransac:
 			currentIndex = 3;
-			setData(listOk);
 			setIndexSelected();
 			btn_hadTransac.setSelected(true);
 			currentSelectedView = btn_hadTransac;
 			break;
-
 		default:
 			break;
 		}
-
-	}
-
-	private void setData(List<Map<String, String>> list) {
-		if (adapter == null) {
-			adapter = new MyOrderAdapter(getActivity(), list);
-			mPullToRefreshListView.setAdapter(adapter);
-		} else {
-			adapter.setData(list);
-		}
+		pager.setCurrentItem(currentIndex);
 	}
 
 	private void setIndexSelected() {
@@ -690,6 +256,7 @@ public class MyOrderFragment extends BaseFragment implements OnClickListener {
 
 		@Override
 		public void onReceive(Context context, Intent intent) {
+			LogN.e(MyOrderFragment.this, "intent===================="+intent.getExtras());
 			if (CommonData.MESSAGE_RECEIVED_ACTION.equals(intent.getAction())) {
 				LogN.e(MyOrderFragment.this, "main is onReceive");
 				/*

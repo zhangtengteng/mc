@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.chehui.maiche"
     android:installLocation="preferExternal"
-    android:versionCode="1"
-    android:versionName="1.0" >
+    android:versionCode="2"
+    android:versionName="2.0" >
 
     <uses-sdk
         android:minSdkVersion="16"
@@ -149,6 +149,18 @@
             android:name=".setup.SetupFeedBackActivity"
             android:launchMode="singleTask" >
         </activity>
+        <activity
+            android:name="com.chehui.maiche.setup.SetupModifyPhoneVerification"
+            android:launchMode="singleTask" />
+        <activity
+            android:name="com.chehui.maiche.setup.SetupModifyPhoneNum"
+            android:launchMode="singleTask" />
+        <activity
+            android:name="com.chehui.maiche.setup.SetupModifyAddress"
+            android:launchMode="singleTask" />
+        <activity
+            android:name="com.chehui.maiche.setup.SetupModifyInfomation"
+            android:launchMode="singleTask" />
 
         <!-- 未分模块界面 -->
         <activity
@@ -180,6 +192,22 @@
             android:launchMode="singleTask" />
         <activity
             android:name=".myorder.MyOrderDetialActtivity"
+            android:launchMode="singleTask" >
+        </activity>
+        <activity
+            android:name=".myorder.MyOrderListAll"
+            android:launchMode="singleTask" >
+        </activity>
+        <activity
+            android:name=".myorder.MyOrderListWait"
+            android:launchMode="singleTask" >
+        </activity>
+        <activity
+            android:name=".myorder.MyOrderListAccept"
+            android:launchMode="singleTask" >
+        </activity>
+        <activity
+            android:name=".myorder.MyOrderListOk"
             android:launchMode="singleTask" >
         </activity>
         <activity
@@ -355,6 +383,7 @@
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
     </application>
 
 </manifest>
