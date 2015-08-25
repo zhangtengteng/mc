@@ -10,7 +10,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -33,6 +36,7 @@ import com.chehui.maiche.httpserve.HttpService;
 import com.chehui.maiche.utils.LogN;
 import com.chehui.maiche.utils.ToastUtils;
 import com.chehui.maiche.utils.Utils;
+import com.lidroid.xutils.BitmapUtils;
 
 /***
  * 已经接受的订单
@@ -40,22 +44,24 @@ import com.chehui.maiche.utils.Utils;
  * @author Administrator
  * 
  */
-public class MyOrderListAccept extends BaseActivity implements OnRefreshListener,
-		OnLoadListener,OnItemClickListener {
+public class MyOrderListAccept extends BaseActivity implements OnRefreshListener, OnLoadListener, OnItemClickListener {
 	private AutoListView autoListView;
 	private String state;
-	private int currentPage=1;
+	private int currentPage = 1;
 	/** 需要提交的参数 */
 	private String params;
 	/** 返回的json数据 */
 	private String json;
 	/** 存储返回数据 */
 	private List<Map<String, String>> list = new ArrayList<Map<String, String>>();
+	/**加载缓存图片*/
+	private BitmapUtils bitmapUtils;
 	/** id值 */
 	private String sellerid;
 	private Map<String, String> map;
 	private MyOrderListAdapter adapter;
 	private TextView tv_empty;
+	private MessageReceiver mMessageReceiver;
 	/** 定义一个变量，来标识是否退出 */
 	private static boolean isExit = false;
 	/***
@@ -83,12 +89,15 @@ public class MyOrderListAccept extends BaseActivity implements OnRefreshListener
 			isExit = false;
 		}
 	};
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_order_list);
+		bitmapUtils = new BitmapUtils(this);
 		initViews();
 		initData();
+		registerMessageReceiver();
 	}
 
 	private void initViews() {
@@ -97,16 +106,16 @@ public class MyOrderListAccept extends BaseActivity implements OnRefreshListener
 		autoListView.setOnLoadListener(this);
 		autoListView.setOnItemClickListener(this);
 		tv_empty = (TextView) findViewById(R.id.tv_empty);
-		tv_empty.setText(getResources().getString(R.string.main_order_accept));
-		autoListView.setEmptyView(tv_empty);	}
+
+	}
 
 	/**
 	 * 初始化数据
 	 */
 	private void initData() {
+		currentPage = 1;
 		int id = SharedPreManager.getInstance().getInt(CommonData.USER_ID, 71);
-		int userState = SharedPreManager.getInstance().getInt(
-				CommonData.USER_STATE, 0);
+		int userState = SharedPreManager.getInstance().getInt(CommonData.USER_STATE, 0);
 		state = String.valueOf(userState);
 		sellerid = String.valueOf(id);
 		params = sellerid + "|" + state + "|" + String.valueOf(currentPage);
@@ -133,15 +142,12 @@ public class MyOrderListAccept extends BaseActivity implements OnRefreshListener
 			protected String doInBackground(Void... params) {
 				// 请求服务器
 				final List<BasicNameValuePair> parameters = new ArrayList<BasicNameValuePair>();
-				parameters.add(new BasicNameValuePair("classname",
-						"SellerOperationService"));
-				parameters.add(new BasicNameValuePair("methodname",
-						"GetQueteByID"));
+				parameters.add(new BasicNameValuePair("classname", "SellerOperationService"));
+				parameters.add(new BasicNameValuePair("methodname", "GetQueteByID"));
 				parameters.add(new BasicNameValuePair("params", conParams));
 
 				LogN.e(MyOrderListAccept.this, "查看参数类型" + parameters.toString());
-				String response = HttpService.methodPost(CommonData.HTTP_URL,
-						parameters);
+				String response = HttpService.methodPost(CommonData.HTTP_URL, parameters);
 
 				return response;
 			}
@@ -171,152 +177,152 @@ public class MyOrderListAccept extends BaseActivity implements OnRefreshListener
 			jsonObject = new JSONObject(json);
 			Boolean success = jsonObject.getBoolean("Success");
 			String mess = jsonObject.getString("Mess");
-			if (success != true) {
-				Message msg = handler
-						.obtainMessage(CommonData.HTTP_HANDLE_FAILE);
+			if (success) {
+				// 解析data数据
+				JSONArray jsonArray = jsonObject.getJSONArray("Data");
+				ArrayList<Map<String, String>> tempList = new ArrayList<Map<String, String>>();
+				if (jsonArray.length() != 0) {
+					for (int i = 0; i < jsonArray.length(); i++) {
+						JSONObject item = jsonArray.getJSONObject(i);
+						// 获取对象对应的值
+						int QuoteID = item.optInt("QuoteID");
+						int SellerID = item.optInt("SellerID");
+						int CarID = item.optInt("CarID");
+
+						// 根据state【0,1,2】判断订单的状态，待接受，已接受，已支付
+						int State = item.optInt("State");
+						String CarDetail = item.optString("CarDetail");
+						String Cityname = item.optString("Cityname");
+						String FloorPrice = item.optString("FloorPrice");
+						String FloorPriceCN = item.optString("FloorPriceCN");
+						String InsurancePrice = item.optString("InsurancePrice");
+						String LicensePrice = item.optString("LicensePrice");
+						String PurchaseTax = item.optString("PurchaseTax");
+						String Prize = item.optString("Prize");
+						String Guideprice = item.optString("Guideprice");
+						String BeginDate = item.optString("BeginDate");
+						String BegindateStr = item.optString("BegindateStr");
+						String EndDate = item.optString("EndDate");
+						String EffectiveTime = item.optString("EffectiveTime");
+						String CreateDate = item.optString("CreateDate");
+						String CreateDateCN = item.optString("CreateDateCN");
+						// String StateCN = item.optString("StateCN");
+						String DingPrice = item.optString("DingPrice");
+						String RegistrationFee = item.optString("RegistrationFee");
+						String CarDecoration = item.optString("CarDecoration");
+						String CarColor = item.optString("CarColor");
+						String CarGift = item.optString("CarGift");
+						String CarPlan = item.optString("CarPlan");
+						String PayMode = item.optString("PayMode");
+						String CarAddress = item.optString("CarAddress");
+						String Sellername = item.optString("Sellername");
+						String BrandName = item.optString("BrandName");
+						String SeriesName = item.optString("SeriesName");
+						String CarName = item.optString("CarName");
+						String Tel = item.optString("Tel");
+						String Ddbh = item.optString("Ddbh");
+						String UserID = item.optString("UserID");
+						String OrderNumber = item.optString("OrderNumber");
+						String ZongJia = item.optString("ZongJia");
+						String QitaZafei = item.optString("QitaZafei");
+						String CarYear = item.optString("CarYear");
+						String ClientID = item.optString("ClientID");
+						String ClientType = item.optString("ClientType");
+						String SeriesFace = item.optString("SeriesFace");
+						int SellerVipLevel = item.optInt("SellerVipLevel");
+						String CarImage = item.optString("CarImage");
+						String OrderID = item.optString("OrderID");
+						String UserName = item.optString("UserName");
+						boolean IsUserPay = item.optBoolean("IsUserPay");
+						String OrderState = item.optString("OrderState");
+
+						map = new HashMap<String, String>();
+						map.put("QuoteID", String.valueOf(QuoteID));
+						map.put("SellerID", String.valueOf(SellerID));
+						map.put("CarID", String.valueOf(CarID));
+						map.put("CarDetail", CarDetail);
+						map.put("Cityname", Cityname);
+						map.put("FloorPrice", FloorPrice);
+						map.put("FloorPriceCN", FloorPriceCN);
+						System.out.println(FloorPrice + "++++++++++++++++++++" + FloorPriceCN);
+						map.put("InsurancePrice", InsurancePrice);
+						map.put("LicensePrice", LicensePrice);
+						map.put("PurchaseTax", PurchaseTax);
+						map.put("Prize", Prize);
+						map.put("Guideprice", Guideprice);
+						map.put("BeginDate", BeginDate);
+						map.put("BegindateStr", BegindateStr);
+						map.put("EndDate", EndDate);
+						map.put("EffectiveTime", EffectiveTime);
+						map.put("CreateDate", CreateDate);
+						map.put("CreateDateCN", CreateDateCN);
+						map.put("DingPrice", DingPrice);
+						map.put("RegistrationFee", RegistrationFee);
+						map.put("CarDecoration", CarDecoration);
+						map.put("CarColor", CarColor);
+						map.put("CarGift", CarGift);
+						map.put("CarPlan", CarPlan);
+						map.put("PayMode", PayMode);
+						map.put("CarAddress", CarAddress);
+						map.put("Sellername", Sellername);
+						map.put("BrandName", BrandName);
+						map.put("SeriesName", SeriesName);
+						map.put("CarName", CarName);
+						map.put("Tel", Tel);
+						map.put("Ddbh", Ddbh);
+						map.put("UserID", UserID);
+						map.put("OrderNumber", OrderNumber);
+						map.put("ZongJia", ZongJia);
+						map.put("QitaZafei", QitaZafei);
+						map.put("CarYear", CarYear);
+						map.put("ClientID", ClientID);
+						map.put("ClientType", ClientType);
+						map.put("SeriesFace", SeriesFace);
+						map.put("SellerVipLevel", String.valueOf(SellerVipLevel));
+						map.put("CarImage", CarImage);
+						map.put("OrderID", OrderID);
+						map.put("UserName", UserName);
+						map.put("State", String.valueOf(State));
+						map.put("IsUserPay", String.valueOf(IsUserPay));
+						map.put("OrderState", OrderState);
+						if (State == 1) {
+							tempList.add(map);
+						}
+						// 根据state【0,1,2】判断订单的状态，待接受，已接受，已支付
+					}
+					if (AutoListView.REFRESH == type) {
+						list.clear();
+					}
+					list.addAll(tempList);
+					LogN.e(MyOrderListAccept.this, "jsonArray=" + jsonArray.length());
+					LogN.e(MyOrderListAccept.this, "tempList=" + tempList.size());
+					LogN.e(MyOrderListAccept.this, "list.size=" + list.size());
+					if (adapter == null) {
+						adapter = new MyOrderListAdapter(MyOrderListAccept.this, list,bitmapUtils);
+						autoListView.setAdapter(adapter);
+					} else {
+						adapter.setData(list);
+					}
+				}
+			} else {
+				Message msg = handler.obtainMessage(CommonData.HTTP_HANDLE_FAILE);
 				Bundle data = msg.getData();
 				data.putString("mess", mess);
 				handler.sendMessage(msg);
-				return;
-			}
-			// 解析data数据
-			JSONArray jsonArray = jsonObject.getJSONArray("Data");
-			ArrayList tempList = new ArrayList();
-			if (jsonArray.length() != 0) {
-				for (int i = 0; i < jsonArray.length(); i++) {
-					JSONObject item = jsonArray.getJSONObject(i);
-					// 获取对象对应的值
-					int QuoteID = item.optInt("QuoteID");
-					int SellerID = item.optInt("SellerID");
-					int CarID = item.optInt("CarID");
 
-					// 根据state【0,1,2】判断订单的状态，待接受，已接受，已支付
-					int State = item.optInt("State");
-					String CarDetail = item.optString("CarDetail");
-					String Cityname = item.optString("Cityname");
-					String FloorPrice = item.optString("FloorPrice");
-					String FloorPriceCN = item.optString("FloorPriceCN");
-					String InsurancePrice = item.optString("InsurancePrice");
-					String LicensePrice = item.optString("LicensePrice");
-					String PurchaseTax = item.optString("PurchaseTax");
-					String Prize = item.optString("Prize");
-					String Guideprice = item.optString("Guideprice");
-					String BeginDate = item.optString("BeginDate");
-					String BegindateStr = item.optString("BegindateStr");
-					String EndDate = item.optString("EndDate");
-					String EffectiveTime = item.optString("EffectiveTime");
-					String CreateDate = item.optString("CreateDate");
-					String CreateDateCN = item.optString("CreateDateCN");
-					// String StateCN = item.optString("StateCN");
-					String DingPrice = item.optString("DingPrice");
-					String RegistrationFee = item.optString("RegistrationFee");
-					String CarDecoration = item.optString("CarDecoration");
-					String CarColor = item.optString("CarColor");
-					String CarGift = item.optString("CarGift");
-					String CarPlan = item.optString("CarPlan");
-					String PayMode = item.optString("PayMode");
-					String CarAddress = item.optString("CarAddress");
-					String Sellername = item.optString("Sellername");
-					String BrandName = item.optString("BrandName");
-					String SeriesName = item.optString("SeriesName");
-					String CarName = item.optString("CarName");
-					String Tel = item.optString("Tel");
-					String Ddbh = item.optString("Ddbh");
-					String UserID = item.optString("UserID");
-					String OrderNumber = item.optString("OrderNumber");
-					String ZongJia = item.optString("ZongJia");
-					String QitaZafei = item.optString("QitaZafei");
-					String CarYear = item.optString("CarYear");
-					String ClientID = item.optString("ClientID");
-					String ClientType = item.optString("ClientType");
-					String SeriesFace = item.optString("SeriesFace");
-					int SellerVipLevel = item.optInt("SellerVipLevel");
-					String CarImage = item.optString("CarImage");
-					String OrderID = item.optString("OrderID");
-					String UserName = item.optString("UserName");
-					boolean IsUserPay = item.optBoolean("IsUserPay");
-					String OrderState = item.optString("OrderState");
-
-					map = new HashMap<String, String>();
-					map.put("QuoteID", String.valueOf(QuoteID));
-					map.put("SellerID", String.valueOf(SellerID));
-					map.put("CarID", String.valueOf(CarID));
-					map.put("CarDetail", CarDetail);
-					map.put("Cityname", Cityname);
-					map.put("FloorPrice", FloorPrice);
-					map.put("FloorPriceCN", FloorPriceCN);
-					System.out.println(FloorPrice + "++++++++++++++++++++"
-							+ FloorPriceCN);
-					map.put("InsurancePrice", InsurancePrice);
-					map.put("LicensePrice", LicensePrice);
-					map.put("PurchaseTax", PurchaseTax);
-					map.put("Prize", Prize);
-					map.put("Guideprice", Guideprice);
-					map.put("BeginDate", BeginDate);
-					map.put("BegindateStr", BegindateStr);
-					map.put("EndDate", EndDate);
-					map.put("EffectiveTime", EffectiveTime);
-					map.put("CreateDate", CreateDate);
-					map.put("CreateDateCN", CreateDateCN);
-					map.put("DingPrice", DingPrice);
-					map.put("RegistrationFee", RegistrationFee);
-					map.put("CarDecoration", CarDecoration);
-					map.put("CarColor", CarColor);
-					map.put("CarGift", CarGift);
-					map.put("CarPlan", CarPlan);
-					map.put("PayMode", PayMode);
-					map.put("CarAddress", CarAddress);
-					map.put("Sellername", Sellername);
-					map.put("BrandName", BrandName);
-					map.put("SeriesName", SeriesName);
-					map.put("CarName", CarName);
-					map.put("Tel", Tel);
-					map.put("Ddbh", Ddbh);
-					map.put("UserID", UserID);
-					map.put("OrderNumber", OrderNumber);
-					map.put("ZongJia", ZongJia);
-					map.put("QitaZafei", QitaZafei);
-					map.put("CarYear", CarYear);
-					map.put("ClientID", ClientID);
-					map.put("ClientType", ClientType);
-					map.put("SeriesFace", SeriesFace);
-					map.put("SellerVipLevel", String.valueOf(SellerVipLevel));
-					map.put("CarImage", CarImage);
-					map.put("OrderID", OrderID);
-					map.put("UserName", UserName);
-					map.put("State", String.valueOf(State));
-					map.put("IsUserPay", String.valueOf(IsUserPay));
-					map.put("OrderState", OrderState);
-					if(State==1){
-						tempList.add(map);
-					}
-					// 根据state【0,1,2】判断订单的状态，待接受，已接受，已支付
-				}
-				if (AutoListView.REFRESH == type) {
-					list.clear();
-				}
-				list.addAll(tempList);
-				LogN.e(MyOrderListAccept.this, "jsonArray="+jsonArray.length());
-				LogN.e(MyOrderListAccept.this, "tempList="+tempList.size());
-				LogN.e(MyOrderListAccept.this, "list.size="+list.size());
-				if (adapter == null) {
-					adapter = new MyOrderListAdapter(MyOrderListAccept.this, list);
-					autoListView.setAdapter(adapter);
-				} else {
-					adapter.setData(list);
-				}
 			}
+
 		} catch (JSONException e) {
 			e.printStackTrace();
 			list.clear();
 			if (adapter == null) {
-				adapter = new MyOrderListAdapter(MyOrderListAccept.this, list);
+				adapter = new MyOrderListAdapter(MyOrderListAccept.this, list,bitmapUtils);
 				autoListView.setAdapter(adapter);
 			} else {
 				adapter.setData(list);
 			}
 		} finally {
-			
+
 			if (type == AutoListView.REFRESH) {
 				autoListView.onRefreshComplete();
 			} else if (type == AutoListView.LOAD) {
@@ -326,11 +332,13 @@ public class MyOrderListAccept extends BaseActivity implements OnRefreshListener
 				autoListView.setResultSize(jsonObject.length());
 			}
 		}
-
+		tv_empty.setText(getResources().getString(R.string.main_order_accept));
+		autoListView.setEmptyView(tv_empty);
 	}
-	private void toOrderDetailActivity(int position){
+
+	private void toOrderDetailActivity(int position) {
 		Intent intent = new Intent(this, MyOrderDetialActtivity.class);
-		Map<String, String> myOrder = list.get(position-1);
+		Map<String, String> myOrder = list.get(position - 1);
 		// 根据state【0,1,2】判断订单的状态，待接受，已接受，已支付
 		String State = myOrder.get("State");
 		// if (state.equals("1") || state.equals("2"))
@@ -390,7 +398,7 @@ public class MyOrderListAccept extends BaseActivity implements OnRefreshListener
 	@Override
 	public void onLoad() {
 		params = sellerid + "|" + state + "|" + String.valueOf(++currentPage);
-		LogN.e(MyOrderListAccept.this, "onLoad ====="+params);
+		LogN.e(MyOrderListAccept.this, "onLoad =====" + params);
 		getMyOrderData(params, AutoListView.LOAD);
 	}
 
@@ -401,7 +409,7 @@ public class MyOrderListAccept extends BaseActivity implements OnRefreshListener
 	public void onRefresh() {
 		currentPage = 1;
 		params = sellerid + "|" + state + "|" + String.valueOf(currentPage);
-		LogN.e(MyOrderListAccept.this, "onRefresh ====="+params);
+		LogN.e(MyOrderListAccept.this, "onRefresh =====" + params);
 		getMyOrderData(params, AutoListView.REFRESH);
 	}
 
@@ -409,7 +417,7 @@ public class MyOrderListAccept extends BaseActivity implements OnRefreshListener
 	public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
 		toOrderDetailActivity(position);
 	}
-	
+
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
@@ -422,13 +430,40 @@ public class MyOrderListAccept extends BaseActivity implements OnRefreshListener
 	private void exit() {
 		if (!isExit) {
 			isExit = true;
-			Toast.makeText(getApplicationContext(), "再按一次退出程序",
-					Toast.LENGTH_SHORT).show();
+			Toast.makeText(getApplicationContext(), "再按一次退出程序", Toast.LENGTH_SHORT).show();
 			// 利用handler延迟发送更改状态信息
 			mHandler2.sendEmptyMessageDelayed(0, 2000);
 		} else {
 			finish();
 			System.exit(0);
 		}
+	}
+
+	/**
+	 * JPush receiver
+	 */
+	public void registerMessageReceiver() {
+		mMessageReceiver = new MessageReceiver();
+		IntentFilter filter = new IntentFilter();
+		filter.setPriority(IntentFilter.SYSTEM_HIGH_PRIORITY);
+		filter.addAction(CommonData.MESSAGE_RECEIVED_ACTION);
+		registerReceiver(mMessageReceiver, filter);
+	}
+
+	public class MessageReceiver extends BroadcastReceiver {
+
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			if (CommonData.MESSAGE_RECEIVED_ACTION.equals(intent.getAction())) {
+				LogN.d(this, " MyOrderListWait is  on  receiver!!!!");
+				initData();
+			}
+		}
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		unregisterReceiver(mMessageReceiver);
 	}
 }

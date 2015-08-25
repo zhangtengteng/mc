@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.chehui.maiche"
     android:installLocation="preferExternal"
-    android:versionCode="2"
-    android:versionName="2.0" >
+    android:versionCode="1"
+    android:versionName="1.0" >
 
     <uses-sdk
         android:minSdkVersion="16"
@@ -361,7 +361,8 @@
         </activity>
         <activity
             android:name="com.chehui.maiche.setup.SetupFeedbackSuccess"
-            android:label="@string/title_activity_feedback_success" >
+            android:label="@string/title_activity_feedback_success"
+            android:launchMode="singleTask" >
         </activity>
         <activity android:name="wxapi.WXEntryActivity" >
         </activity>
@@ -383,7 +384,6 @@
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-
     </application>
 
 </manifest>

@@ -20,6 +20,7 @@ public class CommonData {
 	public static final String KEY_MESSAGE = "message";
 	public static final String KEY_EXTRAS = "extras";
 	public static boolean isForeground = false;
+	public static boolean isUpdate = false;
 	/** 判断我的报价界面刷新 */
 	public static boolean ISMYORDERFRAGMENTREFRESH;
 
@@ -114,7 +115,7 @@ public class CommonData {
 	/**
 	 * 一页数量
 	 */
-	public static final int pageSize =5;
+	public static final int pageSize =20;
 	/** 已支付 */
 	public static final String PAY = "0";
 	/** 已消费 */

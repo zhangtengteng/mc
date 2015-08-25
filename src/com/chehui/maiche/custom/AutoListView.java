@@ -150,7 +150,9 @@ public class AutoListView extends ListView implements OnScrollListener {
 		loadFull = (TextView) footer.findViewById(R.id.loadFull);
 		noData = (TextView) footer.findViewById(R.id.noData);
 		more = (TextView) footer.findViewById(R.id.more);
+//		more.setVisibility(View.GONE);
 		loading = (ProgressBar) footer.findViewById(R.id.loading);
+//		loading.setVisibility(View.GONE);
 
 		header = inflater.inflate(R.layout.autolistview_pull_to_refresh_header, null);
 		arrow = (ImageView) header.findViewById(R.id.arrow);// 箭头图片
